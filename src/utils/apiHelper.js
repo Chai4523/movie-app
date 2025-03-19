@@ -6,9 +6,7 @@ const TMDB_BASE_URL = "";
 const TMDB_BASE_IMG_URL = "https://image.tmdb.org/t/p";
 const JIKAN_BASE_URL = "";
 
-// https://image.tmdb.org/t/p/original/2n7lYEeIbucsEQCswRcVB6ZYmMP.jpg
-
-export async function fetchData() {
+async function fetchData(url) {
   const options = {
     method: "GET",
     headers: {
@@ -18,10 +16,7 @@ export async function fetchData() {
   };
 
   try {
-    const response = await fetch(
-      "https://api.themoviedb.org/3/trending/all/day?language=en-US",
-      options
-    );
+    const response = await fetch(url, options);
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
@@ -31,6 +26,20 @@ export async function fetchData() {
     console.error("Fetch error:", error);
     throw error;
   }
+}
+
+export async function fetchTrendingAll() {
+  const url = "https://api.themoviedb.org/3/trending/all/day?language=en-US";
+  return fetchData(url);
+}
+
+export async function fetchTvGenre() {
+  const url = "https://api.themoviedb.org/3/genre/tv/list?language=en";
+  return fetchData(url);
+}
+export async function fetchMovieGenre() {
+  const url = "https://api.themoviedb.org/3/genre/movie/list?language=en";
+  return fetchData(url);
 }
 
 export function getImage(imgPath, size) {

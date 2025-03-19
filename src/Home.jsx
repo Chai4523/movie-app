@@ -5,16 +5,32 @@ import { useState } from "react";
 import "./app.css";
 
 export default function Home() {
-  const [trending, setTrending] = useState(null);
+  const [trendingAll, setTrendingAll] = useState(null);
+  const [tvGenre, setTvGenre] = useState([]);
+  const [movieGenre, setMovieGenre] = useState([]);
+  const [tvGenreMap, setTvGenreMap] = useState(new Map());
+  const [movieGenreMap, setMovieGenreMap] = useState(new Map());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchTrendingData = async () => {
+    const init = async () => {
       try {
-        const data = await api.fetchData();
-        setTrending(data.results);
-        console.log(trending);
+        const trendingAllRes = await api.fetchTrendingAll();
+        const tvGenreRes = await api.fetchTvGenre();
+        const movieGenreRes = await api.fetchMovieGenre();
+        setTrendingAll(trendingAllRes.results);
+        setTvGenre(tvGenreRes.genres);
+        setMovieGenre(movieGenreRes.genres);
+
+        setTvGenreMap(new Map(tvGenre.map((genre) => [genre.id, genre.name])));
+        setMovieGenreMap(
+          new Map(movieGenre.map((genre) => [genre.id, genre.name]))
+        );
+        
+        // console.log(trendingAll);
+        // console.log(tvGenre);
+        // console.log(movieGenre);
         setLoading(false);
       } catch (err) {
         setError(err);
@@ -22,19 +38,38 @@ export default function Home() {
       }
     };
 
-    fetchTrendingData();
+    init();
   }, []);
+
+  function getGenreById(ids, mediaType) {
+    const genreMap = mediaType === "tv" ? tvGenreMap : movieGenreMap;
+
+    if (Array.isArray(ids)) {
+      return ids.map((id) => genreMap.get(id));
+    } else {
+      return genreMap.get(ids);
+    }
+  }
 
   return (
     <div>
       <div className="carousel">Carousel</div>
-      {trending &&
-        trending.map((data, index) => {
+      {trendingAll &&
+        trendingAll.map((data, index) => {
+          let title = null;
+
+          if (data.media_type === "movie") {
+            title = data.title;
+          } else {
+            title = data.name;
+          }
+
           return (
             <div key={index}>
-              <h3>{data.original_title}</h3>
-              <p>{data.genre_ids}</p>
+              <h3>{title}</h3>
+              <p>{getGenreById(data.genre_ids, data.media_type).join(", ")}</p>
               <p>{data.vote_average}</p>
+              <p>{data.overview}</p>
               <img src={api.getImage(data.backdrop_path, "w1280")} alt="" />
             </div>
           );
