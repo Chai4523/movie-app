@@ -3,6 +3,7 @@ import * as api from "./utils/apiHelper.js";
 import { useEffect } from "react";
 import { useState } from "react";
 import "./app.css";
+import HeroCarousel from "./components/hero-carousel/HeroCarousel.jsx";
 
 export default function Home() {
   const [trendingAll, setTrendingAll] = useState(null);
@@ -23,11 +24,6 @@ export default function Home() {
         setTvGenre(tvGenreRes.genres);
         setMovieGenre(movieGenreRes.genres);
 
-        setTvGenreMap(new Map(tvGenre.map((genre) => [genre.id, genre.name])));
-        setMovieGenreMap(
-          new Map(movieGenre.map((genre) => [genre.id, genre.name]))
-        );
-        
         // console.log(trendingAll);
         // console.log(tvGenre);
         // console.log(movieGenre);
@@ -40,6 +36,13 @@ export default function Home() {
 
     init();
   }, []);
+
+  useEffect(() => {
+    setTvGenreMap(new Map(tvGenre.map((genre) => [genre.id, genre.name])));
+    setMovieGenreMap(
+      new Map(movieGenre.map((genre) => [genre.id, genre.name]))
+    );
+  }, [tvGenre, movieGenre]);
 
   function getGenreById(ids, mediaType) {
     const genreMap = mediaType === "tv" ? tvGenreMap : movieGenreMap;
@@ -54,7 +57,7 @@ export default function Home() {
   return (
     <div>
       <div className="carousel">Carousel</div>
-      {trendingAll &&
+      {/* {trendingAll &&
         trendingAll.map((data, index) => {
           let title = null;
 
@@ -73,7 +76,8 @@ export default function Home() {
               <img src={api.getImage(data.backdrop_path, "w1280")} alt="" />
             </div>
           );
-        })}
+        })} */}
+      <HeroCarousel />
     </div>
   );
 }
