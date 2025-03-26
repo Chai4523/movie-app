@@ -5,15 +5,22 @@ import {
   Paper,
   Text,
   Title,
+  Progress,
   useMantineTheme,
+  RingProgress,
+  Button,
+  ActionIcon,
+  Group,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import classes from "./heroCarousel.module.css";
+import styles from "./heroCarousel.module.css";
 import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
 import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
 import * as api from "../../utils/apiHelper";
+import { FaCircleInfo } from "react-icons/fa6";
+import { CiBookmark } from "react-icons/ci";
 
 function Hero({
   backdrop_path,
@@ -24,29 +31,60 @@ function Hero({
   vote_average,
 }) {
   const image = api.getImage(backdrop_path, "w1280");
+  const iconInfo = <FaCircleInfo size={18} />;
 
   return (
     <>
-    <Paper
-      shadow="xs"
-      p="xl"
-      style={{ backgroundImage: `url(${image})` }}
-      className={classes.card}
+      <Paper
+        shadow="xs"
+        p="xl"
+        style={{ backgroundImage: `url(${image})` }}
+        className={styles.card}
       >
-      <Overlay 
-      zIndex={0}
-      gradient="linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.2) 100%)" />
-      <Box className={classes.content}>
-      <Title order={3} className={classes.title}>
-        {title}
-      </Title>
-        <Text className={classes.overview} size="sm" lineClamp={2}>
-          {overview}
-        </Text>
-        <div className={classes.overlay}></div>
-      </Box>
-    </Paper>
-      </>
+        <Overlay
+          zIndex={0}
+          gradient="linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.2) 100%)"
+        />
+        <Box className={styles.content}>
+          <div>
+            <Title order={3} className={styles.title}>
+              {title}
+            </Title>
+            <Text className={styles.overview} size="sm" lineClamp={2}>
+              {overview}
+            </Text>
+          </div>
+          <Text>{genre_ids}</Text>
+          <div className={styles["action-row"]}>
+            <Button variant="white" color="black" leftSection={iconInfo}>
+              More Info
+            </Button>
+            <ActionIcon
+              variant="outline"
+              aria-label="action icon"
+              size={60}
+              radius={60}
+              color="dimgrey"
+              bd="2px solid dimgrey"
+            >
+              <CiBookmark size={30} color="white" />
+            </ActionIcon>
+            <RingProgress
+              size={70}
+              thickness={4.8}
+              roundCaps
+              sections={[{ value: vote_average * 10, color: "white" }]}
+              label={
+                <Text c="white" fw={500} ta="center" size="lg">
+                  {Math.round(vote_average * 10) / 10}
+                </Text>
+              }
+            />
+          </div>
+        </Box>
+        <div className={styles.overlay}></div>
+      </Paper>
+    </>
   );
 }
 
@@ -91,23 +129,17 @@ export default function HeroCarousel() {
   ));
 
   return (
-    <Carousel
-      align="start"
-      loop={true}
-      plugins={[autoPlay.current]}
-      withIndicators
-      className={classes}
-    >
-      {slides}
-    </Carousel>
+    <>
+      <Carousel
+        align="start"
+        loop={true}
+        plugins={[autoPlay.current]}
+        withIndicators
+        classNames={styles}
+      >
+        {slides}
+      </Carousel>
+      <Progress value={1} size="xs" color="white" />
+    </>
   );
 }
-
-// export default function HeroCarousel() {
-//   return (
-//     <div>
-//       HeroCarousel
-
-//     </div>
-//   );
-// }
