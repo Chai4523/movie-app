@@ -77,7 +77,7 @@ export default function Home() {
             </div>
           );
         })} */}
-      <HeroCarousel />
+      {trendingAll && <HeroCarousel data={trendingAll}/>}
     </div>
   );
 }

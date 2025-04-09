@@ -1,62 +1,64 @@
-import { Carousel } from "@mantine/carousel";
 import {
   Box,
   Overlay,
-  Paper,
   Text,
   Title,
-  Progress,
-  useMantineTheme,
   RingProgress,
   Button,
   ActionIcon,
-  Group,
 } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
-import styles from "./heroCarousel.module.css";
 import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
+import { Carousel } from "@mantine/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
+import { useState } from "react";
+import styles from "./heroCarousel.module.css";
 import * as api from "../../utils/apiHelper";
+
 import { FaCircleInfo } from "react-icons/fa6";
 import { CiBookmark } from "react-icons/ci";
+import { TbChevronLeft, TbChevronRight } from "react-icons/tb";
 
 function Hero({
   backdrop_path,
+  poster_path,
   title,
   overview,
   media_type,
   genre_ids,
   vote_average,
 }) {
-  const image = api.getImage(backdrop_path, "w1280");
+  const backdrop = api.getImage(backdrop_path, "w1280");
+  const poster = api.getImage(poster_path, "w500");
   const iconInfo = <FaCircleInfo size={18} />;
 
   return (
     <>
-      <Paper
-        shadow="xs"
+      <Box
         p="xl"
-        style={{ backgroundImage: `url(${image})` }}
-        className={styles.card}
+        style={{ backgroundImage: `url(${backdrop})` }}
+        className={styles.hero}
       >
         <Overlay
           zIndex={0}
           gradient="linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.2) 100%)"
         />
         <Box className={styles.content}>
-          <div>
-            <Title order={3} className={styles.title}>
-              {title}
-            </Title>
-            <Text className={styles.overview} size="sm" lineClamp={2}>
-              {overview}
-            </Text>
-          </div>
-          <Text>{genre_ids}</Text>
+          <Title order={1} className={styles.title}>
+            {title}
+          </Title>
+          <Text className={styles.overview} lineClamp={3}>
+            {overview}
+          </Text>
+          <Text className={styles.genre}>{genre_ids}</Text>
           <div className={styles["action-row"]}>
-            <Button variant="white" color="black" leftSection={iconInfo}>
+            <Button
+              variant="white"
+              color="black"
+              leftSection={iconInfo}
+              size="lg"
+            >
               More Info
             </Button>
             <ActionIcon
@@ -76,14 +78,16 @@ function Hero({
               sections={[{ value: vote_average * 10, color: "white" }]}
               label={
                 <Text c="white" fw={500} ta="center" size="lg">
-                  {Math.round(vote_average * 10) / 10}
+                  {Number.parseFloat(vote_average).toFixed(1)}
                 </Text>
               }
             />
           </div>
         </Box>
-        <div className={styles.overlay}></div>
-      </Paper>
+        <Box className={styles.poster}>
+          <img src={poster} alt={`A poster of ${title}`} classNames={styles} />
+        </Box>
+      </Box>
     </>
   );
 }
@@ -118,10 +122,15 @@ const data = [
   },
 ];
 
-export default function HeroCarousel() {
+export default function HeroCarousel({ data }) {
   const autoPlay = useRef(Autoplay({ delay: 7000 }));
-  const theme = useMantineTheme();
-  const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
+  const [embla, setEmbla] = useState(null);
+
+  const handleNext = () => embla?.scrollNext();
+  const handlePrev = () => embla?.scrollPrev();
+
+  console.log(data);
+
   const slides = data.map((item) => (
     <Carousel.Slide key={item.title}>
       <Hero {...item} />
@@ -131,15 +140,18 @@ export default function HeroCarousel() {
   return (
     <>
       <Carousel
+        color="white"
         align="start"
         loop={true}
-        plugins={[autoPlay.current]}
+        getEmblaApi={setEmbla}
+        // plugins={[autoPlay.current]}
         withIndicators
         classNames={styles}
+        nextControlIcon={<TbChevronRight size={50} />}
+        previousControlIcon={<TbChevronLeft size={50} />}
       >
         {slides}
       </Carousel>
-      <Progress value={1} size="xs" color="white" />
     </>
   );
 }
