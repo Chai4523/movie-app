@@ -56,7 +56,6 @@ export default function Home() {
 
   return (
     <div>
-      <div className="carousel">Carousel</div>
       {/* {trendingAll &&
         trendingAll.map((data, index) => {
           let title = null;

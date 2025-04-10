@@ -36,7 +36,6 @@ function Hero({
   return (
     <>
       <Box
-        p="xl"
         style={{ backgroundImage: `url(${backdrop})` }}
         className={styles.hero}
       >
