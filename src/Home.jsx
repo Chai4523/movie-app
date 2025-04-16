@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import "./app.css";
 import HeroCarousel from "./components/hero-carousel/HeroCarousel.jsx";
+import CardCarousel from "./components/card-carousel/CardCarousel.jsx";
 
 export default function Home() {
   const [trendingAll, setTrendingAll] = useState(null);
@@ -77,6 +78,7 @@ export default function Home() {
           );
         })} */}
       {trendingAll && <HeroCarousel data={trendingAll}/>}
+      <CardCarousel />
     </div>
   );
 }
