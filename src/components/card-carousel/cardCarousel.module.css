@@ -1,20 +1,44 @@
 .card {
-    height: 100%;
-    width: 100%;
-    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: end;
 }
 
-.card-img {
+.card-poster {
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 12px;
+}
+
+.info {
+    width: 100%;
+    position: relative;
+    bottom: 15px;
+}
+
+.ring-progress {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 100%;
+}
+
+.info-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.card-backdrop {
     width: 100%;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
-.info {
-    width: 100%;
+.hover-content {
+    z-index: 2;
+    position: relative;
 }

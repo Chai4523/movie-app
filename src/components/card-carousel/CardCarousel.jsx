@@ -1,9 +1,19 @@
-import { Box, Button, HoverCard, Paper, Text } from "@mantine/core";
+import {
+  Box,
+  Button,
+  HoverCard,
+  Overlay,
+  Paper,
+  RingProgress,
+  Text,
+} from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
 import { Carousel } from "@mantine/carousel";
 import styles from "./cardCarousel.module.css";
 import * as api from "../../utils/apiHelper";
+
+import { GoDash } from "react-icons/go";
 
 function Card({
   backdrop_path,
@@ -14,22 +24,81 @@ function Card({
   media_type,
   genre_ids,
   vote_average,
+  first_air_date,
+  release_date,
 }) {
+  const displayTitle = title || name;
   const poster = api.getImage(poster_path, "w342");
+  const backdrop = api.getImage(backdrop_path, "w780");
+
+  const ringColor = (vote_average) => {
+    if (vote_average > 7) return "green";
+    if (vote_average > 5) return "yellow";
+    return "red";
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+
+    return new Intl.DateTimeFormat("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    }).format(date);
+  };
+
+  const releaseDate = release_date || first_air_date;
+  const displayDate = releaseDate ? formatDate(releaseDate) : "Date N/A";
+  const formatMediaType = (media_type) => {
+    if (media_type == "tv") return "TV";
+    return (
+      String(media_type).charAt(0).toUpperCase() + String(media_type).slice(1)
+    );
+  };
 
   return (
-    <HoverCard>
+    <HoverCard openDelay={150} closeDelay={20000}>
       <HoverCard.Target>
         <div className={styles.card}>
-          <img src={poster} alt="" className={styles["card-img"]} />
+          <img src={poster} alt="" className={styles["card-poster"]} />
           <Box className={styles.info}>
-            <Text>{title}</Text>
-            <Text>{Number.parseFloat(vote_average).toFixed(1)}</Text>
+            <RingProgress
+              size={42}
+              thickness={2}
+              roundCaps
+              className={styles["ring-progress"]}
+              sections={[
+                { value: vote_average * 10, color: ringColor(vote_average) },
+              ]}
+              label={
+                <Text c="white" fw={500} ta="center" size="xs">
+                  {Number.parseFloat(vote_average).toFixed(1)}
+                </Text>
+              }
+            />
+            <Text truncate="end" maw={196}>
+              {displayTitle}
+            </Text>
+            <Box className={styles["info-row"]}>
+              <Text>{displayDate}</Text>
+              <span>•</span>
+              <Text>{formatMediaType(media_type)}</Text>
+            </Box>
           </Box>
         </div>
       </HoverCard.Target>
-      <HoverCard.Dropdown>
-        <Text>Some text</Text>
+      <HoverCard.Dropdown p={0}>
+        <Box maw={440}>
+          <img src={backdrop} alt="" className={styles["card-backdrop"]} />
+          <Overlay
+            gradient="linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.95) 100%)"
+            opacity={0.85}
+            zIndex={0}
+          />
+          <Box className={styles["hover-content"]}>
+            <Text>Some text</Text>
+          </Box>
+        </Box>
       </HoverCard.Dropdown>
     </HoverCard>
   );
@@ -164,7 +233,7 @@ const data = [
   },
 ];
 
-export default function CardCarousel() {
+export default function CardCarousel({ title = "Trending" }) {
   console.log(data);
 
   const slides = data.map((item) => (
@@ -175,8 +244,14 @@ export default function CardCarousel() {
 
   return (
     <>
-      CardCarousel
-      <Carousel height={370} slideSize={200} slideGap="sm" align="start" containScroll="trimSnaps">
+      <h1>{title}</h1>
+      <Carousel
+        slideSize={210}
+        slideGap="sm"
+        align="start"
+        containScroll="trimSnaps"
+        p={10}
+      >
         {slides}
       </Carousel>
     </>
