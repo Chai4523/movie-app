@@ -7,11 +7,39 @@ import { IoTvOutline } from "react-icons/io5";
 import { SiMyanimelist } from "react-icons/si";
 import { FaFilm } from "react-icons/fa";
 import { FiTv } from "react-icons/fi";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useRef } from "react";
 
 export default function HeaderNav() {
+  const [showHeader, setShowHeader] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
+        setShowHeader(false);
+      } else {
+        setShowHeader(true);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
-      <header className={styles.header}>
+      <header
+        className={`${styles.header} ${showHeader ? styles.show : styles.hide}`}
+      >
         <div className={styles["blur-bg"]}></div>
         <Group>
           <IoTvOutline />

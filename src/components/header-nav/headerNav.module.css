@@ -8,6 +8,15 @@
   padding: 0 20px;
   z-index: 2;
   background-color: #3535357b;
+  transition: transform 0.3s ease;
+}
+
+.header.hide {
+  transform: translateY(-100%);
+}
+
+.header.show {
+  transform: translateY(0);
 }
 
 .blur-bg {
