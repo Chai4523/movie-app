@@ -2,7 +2,6 @@ import React from "react";
 import * as api from "./utils/apiHelper.js";
 import { useEffect } from "react";
 import { useState } from "react";
-import "./app.css";
 import HeroCarousel from "./components/hero-carousel/HeroCarousel.jsx";
 import CardCarousel from "./components/card-carousel/CardCarousel.jsx";
 
