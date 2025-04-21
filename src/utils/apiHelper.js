@@ -33,6 +33,16 @@ export async function fetchTrendingAll() {
   return fetchData(url);
 }
 
+export async function fetchTrendingMovie() {
+  const url = 'https://api.themoviedb.org/3/trending/movie/day?language=en-US';
+  return fetchData(url);
+}
+
+export async function fetchTrendingTv() {
+  const url = 'https://api.themoviedb.org/3/trending/tv/day?language=en-US';
+  return fetchData(url);
+}
+
 export async function fetchTvGenre() {
   const url = "https://api.themoviedb.org/3/genre/tv/list?language=en";
   return fetchData(url);

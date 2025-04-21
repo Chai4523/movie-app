@@ -112,7 +112,7 @@ export default function HeroCarousel({ data }) {
         align="start"
         loop={true}
         getEmblaApi={setEmbla}
-        // plugins={[autoPlay.current]}
+        plugins={[autoPlay.current]}
         withIndicators
         classNames={styles}
         nextControlIcon={<TbChevronRight size={50} />}

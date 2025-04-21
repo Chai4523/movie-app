@@ -8,6 +8,8 @@ import { GenreProvider } from "./contexts/GenreContext.jsx";
 
 export default function Home() {
   const [trendingAll, setTrendingAll] = useState(null);
+  const [trendingMovie, setTrendingMovie] = useState(null);
+  const [trendingTv, setTrendingTv] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -15,12 +17,16 @@ export default function Home() {
     const init = async () => {
       try {
         const trendingAllRes = await api.fetchTrendingAll();
+        const trendingMovieRes = await api.fetchTrendingMovie();
+        const trendingTvRes = await api.fetchTrendingTv();
         setTrendingAll(trendingAllRes.results);
-
+        setTrendingMovie(trendingMovieRes.results);
+        setTrendingTv(trendingTvRes.results);
       } catch (err) {
         setError(err);
+        throw new Error("Something went wrong:", err)
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     };
 
@@ -29,10 +35,17 @@ export default function Home() {
 
   return (
     <div>
-      <GenreProvider>
-        {trendingAll && <HeroCarousel data={trendingAll} />}
-        <CardCarousel />
-      </GenreProvider>
+      {!loading && (
+        <GenreProvider>
+          {trendingAll && <HeroCarousel data={trendingAll} />}
+          {trendingMovie && (
+            <CardCarousel data={trendingMovie} title="Trending Movie" />
+          )}
+          {trendingTv && (
+            <CardCarousel data={trendingTv} title="Trending TV Shows" />
+          )}
+        </GenreProvider>
+      )}
     </div>
   );
 }
