@@ -15,6 +15,7 @@ import { useRef } from "react";
 import { useState } from "react";
 import styles from "./heroCarousel.module.css";
 import * as api from "../../utils/apiHelper";
+import { useGenres } from "../../contexts/GenreContext";
 
 import { FaCircleInfo } from "react-icons/fa6";
 import { CiBookmark } from "react-icons/ci";
@@ -24,6 +25,7 @@ function Hero({
   backdrop_path,
   poster_path,
   title,
+  name,
   overview,
   media_type,
   genre_ids,
@@ -32,6 +34,8 @@ function Hero({
   const backdrop = api.getImage(backdrop_path, "w1280");
   const poster = api.getImage(poster_path, "w500");
   const iconInfo = <FaCircleInfo size={18} />;
+  const displayTitle = title || name
+  const { getGenreByIds, loading } = useGenres()
 
   return (
     <Box
@@ -44,12 +48,12 @@ function Hero({
       />
       <Box className={styles.content}>
         <Title order={1} className={styles.title}>
-          {title}
+          {displayTitle}
         </Title>
         <Text className={styles.overview} lineClamp={3}>
           {overview}
         </Text>
-        <Text className={styles.genre}>{genre_ids}</Text>
+        <Text className={styles.genre}>{!loading && getGenreByIds(genre_ids)}</Text>
         <div className={styles["action-row"]}>
           <Button
             variant="white"

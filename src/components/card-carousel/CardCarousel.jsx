@@ -14,6 +14,7 @@ import "@mantine/carousel/styles.css";
 import { Carousel } from "@mantine/carousel";
 import styles from "./cardCarousel.module.css";
 import * as api from "../../utils/apiHelper";
+import { useGenres } from "../../contexts/GenreContext";
 
 import { FaStar } from "react-icons/fa";
 import { FaCircleInfo } from "react-icons/fa6";
@@ -35,6 +36,7 @@ function Card({
   const displayTitle = title || name;
   const poster = api.getImage(poster_path, "w342");
   const backdrop = api.getImage(backdrop_path, "w780");
+  const { getGenreByIds, loading } = useGenres()
 
   const ringColor = (vote_average) => {
     if (vote_average > 7) return "green";
@@ -64,8 +66,7 @@ function Card({
   const iconInfo = <FaCircleInfo size={18} />;
 
   return (
-    // close delay 200
-    <HoverCard openDelay={150} closeDelay={20000} position="right">
+    <HoverCard openDelay={150} closeDelay={200} position="right">
       <HoverCard.Target>
         <div className={styles.card}>
           <img src={poster} alt="" className={styles["card-poster"]} />
@@ -114,7 +115,7 @@ function Card({
                 <Text>{Number.parseFloat(vote_average).toFixed(1)}</Text>
               </Box>
             </Box>
-            <Text>{genre_ids}</Text>
+            <Text>{!loading && getGenreByIds(genre_ids)}</Text>
             <Text mt={16}>{overview}</Text>
             <Box className={styles["button-row"]}>
               <Button
@@ -274,7 +275,7 @@ const data = [
 ];
 
 export default function CardCarousel({ title = "Trending" }) {
-  console.log(data);
+  // console.log(data);
 
   const slides = data.map((item) => (
     <Carousel.Slide key={item.id}>
