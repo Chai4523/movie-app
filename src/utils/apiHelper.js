@@ -52,6 +52,11 @@ export async function fetchMovieGenre() {
   return fetchData(url);
 }
 
+export async function fetchMovieById(movieId) {
+  const url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
+  return fetchData(url);
+}
+
 export function getImage(imgPath, size) {
   return `${TMDB_BASE_IMG_URL}/${size}/${imgPath}`;
 }
