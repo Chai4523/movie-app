@@ -19,6 +19,7 @@ import { FaCircleInfo } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa";
 import { FaShare } from "react-icons/fa";
 
+// TODO: refactor to mediaCarousel
 function Card({
   backdrop_path,
   poster_path,
