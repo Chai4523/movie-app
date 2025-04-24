@@ -61,7 +61,11 @@ export async function fetchMovieCreditsById(movieId) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`;
   return fetchData(url);
 }
+export async function fetchMovieKeywordsById(movieId) {
+  const url = `https://api.themoviedb.org/3/movie/${movieId}/keywords`;
+  return fetchData(url);
+}
 
 export function getImage(imgPath, size) {
-  return `${TMDB_BASE_IMG_URL}/${size}/${imgPath}`;
+  return imgPath ? `${TMDB_BASE_IMG_URL}/${size}/${imgPath}` : null;
 }

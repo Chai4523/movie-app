@@ -41,12 +41,13 @@
   column-gap: 50px;
 }
 
-.genre {
+.label {
   background-color: #9c9c9c3f;
   padding: 1px 8px;
   border-radius: 6px;
   color: white;
   white-space: nowrap;
+  align-self: center;
 }
 
 .label-white {
@@ -64,4 +65,11 @@
 .border-btm {
   padding-bottom: 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.keywords-container {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  vertical-align: middle;
 }

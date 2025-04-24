@@ -1,13 +1,26 @@
 import { useEffect, useState } from "react";
-import { Box, Rating, ScrollArea, Text, Title, Tooltip } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Rating,
+  ScrollArea,
+  Text,
+  Title,
+  Tooltip,
+} from "@mantine/core";
 import styles from "./infoPage.module.css";
 import * as api from "./utils/apiHelper";
+import PersonCarousel from "./components/person-carousel/PersonCarousel";
 
 export default function InfoPage() {
   const [media, setMedia] = useState(null);
   const [credit, setCredit] = useState(null);
+  const [keyword, setKeyword] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const [toggleKeywords, setToggleKeywords] = useState(false);
+  const [toggleKeywordsTxt, setToggleKeywordsTxt] = useState("Show more");
 
   const movieId = 950387;
   const tvId = 100088;
@@ -17,8 +30,10 @@ export default function InfoPage() {
       try {
         const mediaRes = await api.fetchMovieById(movieId);
         const creditRes = await api.fetchMovieCreditsById(movieId);
+        const keywordRes = await api.fetchMovieKeywordsById(movieId);
         setMedia(mediaRes);
         setCredit(creditRes);
+        setKeyword(keywordRes.keywords);
       } catch (err) {
         setError(err);
         throw new Error("Unable to load info:", err);
@@ -31,21 +46,34 @@ export default function InfoPage() {
   }, []);
 
   useEffect(() => {
-    if (media) {
+    if (media && credit && keyword) {
       console.log("Media updated:", media);
       console.log("Credit updated:", credit);
+      console.log("keyword updated:", keyword);
     }
-  }, [media]);
+  }, [media, credit, keyword]);
 
   const poster = media ? api.getImage(media.poster_path, "w342") : null;
   const backdrop = media ? api.getImage(media.backdrop_path, "w780") : null;
-  const genres = media
-    ? media.genres.map((genre) => (
-        <span key={genre.id} className={styles.genre}>
-          {genre.name}
-        </span>
-      ))
-    : null;
+  const keywordsTrimmed = keyword ? keyword.slice(0, 3) : null;
+
+  const onToggleKeywords = () => {
+    if (!toggleKeywords) {
+      setToggleKeywordsTxt("Show less");
+    } else {
+      setToggleKeywordsTxt("Show more");
+    }
+    setToggleKeywords(!toggleKeywords);
+  };
+
+  const formatLabels = (labels) =>
+    labels
+      ? labels.map((label) => (
+          <span key={label.id} className={styles.label}>
+            {label.name}
+          </span>
+        ))
+      : null;
 
   const formatRuntime = (runtime) => {
     const hours = Math.floor(runtime / 60);
@@ -98,7 +126,7 @@ export default function InfoPage() {
               <Text fs={"italic"} opacity={0.8} mt={5} mb={15}>
                 {media.tagline}
               </Text>
-              <div className={styles.row}>{genres}</div>
+              <div className={styles.row}>{formatLabels(media.genres)}</div>
 
               <div className={`${styles.row} ${styles.ratings}`}>
                 <Tooltip
@@ -160,10 +188,22 @@ export default function InfoPage() {
                 <span className={styles["label-white"]}>Origin Country: </span>
                 {media.origin_country}
               </Text>
+              <Box pt={15} className={`${styles.row} ${styles["border-btm"]}`}>
+                <Text>
+                  <span className={styles["label-white"]}>Keywords: </span>
+                </Text>
+
+                <Box className={styles["keywords-container"]}>
+                  {formatLabels(toggleKeywords ? keyword : keywordsTrimmed)}
+                  <Button onClick={() => onToggleKeywords()}  variant="light" color="gray">
+                    {toggleKeywordsTxt}
+                  </Button>
+                </Box>
+              </Box>
             </ScrollArea>
           </div>
 
-          {/* TODO: add person carousel here */}
+          {credit && <PersonCarousel data={credit.cast} />}
         </div>
       )}
     </>
