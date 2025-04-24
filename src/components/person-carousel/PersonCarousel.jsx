@@ -49,10 +49,10 @@ export default function PersonCarousel({ data }) {
   return (
     <>
       <Group className={styles["section-heading"]}>
-        <Title p={10} order={1} c={"white"} pos={"relative"}>
+        <Title p={10} order={2} c={"white"} pos={"relative"}>
           Cast
         </Title>
-        <Group>
+        <Group mr={10}>
           <ActionIcon
             onClick={handlePrev}
             variant="subtle"

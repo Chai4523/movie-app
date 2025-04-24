@@ -11,11 +11,14 @@ import {
 import styles from "./infoPage.module.css";
 import * as api from "./utils/apiHelper";
 import PersonCarousel from "./components/person-carousel/PersonCarousel";
+import CardCarousel from "./components/card-carousel/CardCarousel";
+import { GenreProvider } from "./contexts/GenreContext";
 
 export default function InfoPage() {
   const [media, setMedia] = useState(null);
   const [credit, setCredit] = useState(null);
   const [keyword, setKeyword] = useState(null);
+  const [recommendation, setRecommendation] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -31,9 +34,11 @@ export default function InfoPage() {
         const mediaRes = await api.fetchMovieById(movieId);
         const creditRes = await api.fetchMovieCreditsById(movieId);
         const keywordRes = await api.fetchMovieKeywordsById(movieId);
+        const recommendRes = await api.fetchMovieRecommentdationsById(movieId);
         setMedia(mediaRes);
         setCredit(creditRes);
         setKeyword(keywordRes.keywords);
+        setRecommendation(recommendRes);
       } catch (err) {
         setError(err);
         throw new Error("Unable to load info:", err);
@@ -46,12 +51,13 @@ export default function InfoPage() {
   }, []);
 
   useEffect(() => {
-    if (media && credit && keyword) {
+    if (media && credit && keyword && recommendation) {
       console.log("Media updated:", media);
       console.log("Credit updated:", credit);
       console.log("keyword updated:", keyword);
+      console.log("recommendation updated:", recommendation);
     }
-  }, [media, credit, keyword]);
+  }, [media, credit, keyword, recommendation]);
 
   const poster = media ? api.getImage(media.poster_path, "w342") : null;
   const backdrop = media ? api.getImage(media.backdrop_path, "w780") : null;
@@ -195,7 +201,11 @@ export default function InfoPage() {
 
                 <Box className={styles["keywords-container"]}>
                   {formatLabels(toggleKeywords ? keyword : keywordsTrimmed)}
-                  <Button onClick={() => onToggleKeywords()}  variant="light" color="gray">
+                  <Button
+                    onClick={() => onToggleKeywords()}
+                    variant="light"
+                    color="gray"
+                  >
                     {toggleKeywordsTxt}
                   </Button>
                 </Box>
@@ -204,6 +214,15 @@ export default function InfoPage() {
           </div>
 
           {credit && <PersonCarousel data={credit.cast} />}
+          <GenreProvider>
+            {recommendation && (
+              <CardCarousel
+                data={recommendation.results}
+                disabled={true}
+                title="Recommendations"
+              />
+            )}
+          </GenreProvider>
         </div>
       )}
     </>

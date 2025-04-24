@@ -61,8 +61,14 @@ export async function fetchMovieCreditsById(movieId) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`;
   return fetchData(url);
 }
+
 export async function fetchMovieKeywordsById(movieId) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}/keywords`;
+  return fetchData(url);
+}
+
+export async function fetchMovieRecommentdationsById(movieId) {
+  const url = `https://api.themoviedb.org/3/movie/${movieId}/recommendations?language=en-US&page=1`;
   return fetchData(url);
 }
 
