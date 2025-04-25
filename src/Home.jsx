@@ -3,7 +3,7 @@ import * as api from "./utils/apiHelper.js";
 import { useEffect } from "react";
 import { useState } from "react";
 import HeroCarousel from "./components/hero-carousel/HeroCarousel.jsx";
-import CardCarousel from "./components/card-carousel/CardCarousel.jsx";
+import MediaCarousel from "./components/media-carousel/MediaCarousel.jsx";
 import { GenreProvider } from "./contexts/GenreContext.jsx";
 
 export default function Home() {
@@ -24,7 +24,7 @@ export default function Home() {
         setTrendingTv(trendingTvRes.results);
       } catch (err) {
         setError(err);
-        throw new Error("Something went wrong:", err)
+        throw new Error("Something went wrong:", err);
       } finally {
         setLoading(false);
       }
@@ -34,18 +34,16 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
-      {!loading && (
-        <GenreProvider>
-          {trendingAll && <HeroCarousel data={trendingAll} />}
-          {trendingMovie && (
-            <CardCarousel data={trendingMovie} title="Trending Movie" />
-          )}
-          {trendingTv && (
-            <CardCarousel data={trendingTv} title="Trending TV Shows" />
-          )}
-        </GenreProvider>
-      )}
-    </div>
+    !loading && (
+      <>
+        {trendingAll && <HeroCarousel data={trendingAll} />}
+        {trendingMovie && (
+          <MediaCarousel data={trendingMovie} title="Trending Movie" />
+        )}
+        {trendingTv && (
+          <MediaCarousel data={trendingTv} title="Trending TV Shows" />
+        )}
+      </>
+    )
   );
 }

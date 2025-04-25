@@ -11,7 +11,7 @@ import {
 import styles from "./infoPage.module.css";
 import * as api from "./utils/apiHelper";
 import PersonCarousel from "./components/person-carousel/PersonCarousel";
-import CardCarousel from "./components/card-carousel/CardCarousel";
+import MediaCarousel from "./components/media-carousel/MediaCarousel";
 import { GenreProvider } from "./contexts/GenreContext";
 
 export default function InfoPage() {
@@ -214,15 +214,13 @@ export default function InfoPage() {
           </div>
 
           {credit && <PersonCarousel data={credit.cast} />}
-          <GenreProvider>
-            {recommendation && (
-              <CardCarousel
-                data={recommendation.results}
-                disabled={true}
-                title="Recommendations"
-              />
-            )}
-          </GenreProvider>
+          {recommendation && (
+            <MediaCarousel
+              data={recommendation.results}
+              disabled={true}
+              title="Recommendations"
+            />
+          )}
         </div>
       )}
     </>
