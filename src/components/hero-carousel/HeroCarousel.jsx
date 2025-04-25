@@ -15,7 +15,7 @@ import { useRef } from "react";
 import { useState } from "react";
 import styles from "./heroCarousel.module.css";
 import * as api from "../../utils/apiHelper";
-import { useGenres } from "../../contexts/GenreContext";
+import { GenreProvider, useGenres } from "../../contexts/GenreContext";
 
 import { FaCircleInfo } from "react-icons/fa6";
 import { CiBookmark } from "react-icons/ci";
@@ -34,8 +34,8 @@ function Hero({
   const backdrop = api.getImage(backdrop_path, "w1280");
   const poster = api.getImage(poster_path, "w500");
   const iconInfo = <FaCircleInfo size={18} />;
-  const displayTitle = title || name
-  const { getGenreByIds, loading } = useGenres()
+  const displayTitle = title || name;
+  const { getGenreByIds, loading } = useGenres();
 
   return (
     <Box
@@ -53,7 +53,9 @@ function Hero({
         <Text className={styles.overview} lineClamp={3}>
           {overview}
         </Text>
-        <Text className={styles.genre}>{!loading && getGenreByIds(genre_ids)}</Text>
+        <Text className={styles.genre}>
+          {!loading && getGenreByIds(genre_ids)}
+        </Text>
         <div className={styles["action-row"]}>
           <Button
             variant="white"
@@ -97,8 +99,6 @@ export default function HeroCarousel({ data }) {
   const autoPlay = useRef(Autoplay({ delay: 7000 }));
   const [embla, setEmbla] = useState(null);
 
-  // console.log(data);
-
   const slides = data.map((item) => (
     <Carousel.Slide key={item.id}>
       <Hero {...item} />
@@ -107,19 +107,21 @@ export default function HeroCarousel({ data }) {
 
   return (
     <>
-      <Carousel
-        color="white"
-        align="start"
-        loop={true}
-        getEmblaApi={setEmbla}
-        plugins={[autoPlay.current]}
-        withIndicators
-        classNames={styles}
-        nextControlIcon={<TbChevronRight size={50} />}
-        previousControlIcon={<TbChevronLeft size={50} />}
-      >
-        {slides}
-      </Carousel>
+      <GenreProvider>
+        <Carousel
+          color="white"
+          align="start"
+          loop={true}
+          getEmblaApi={setEmbla}
+          plugins={[autoPlay.current]}
+          withIndicators
+          classNames={styles}
+          nextControlIcon={<TbChevronRight size={50} />}
+          previousControlIcon={<TbChevronLeft size={50} />}
+        >
+          {slides}
+        </Carousel>
+      </GenreProvider>
     </>
   );
 }
