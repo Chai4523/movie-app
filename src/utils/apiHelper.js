@@ -34,12 +34,12 @@ export async function fetchTrendingAll() {
 }
 
 export async function fetchTrendingMovie() {
-  const url = 'https://api.themoviedb.org/3/trending/movie/day?language=en-US';
+  const url = "https://api.themoviedb.org/3/trending/movie/day?language=en-US";
   return fetchData(url);
 }
 
 export async function fetchTrendingTv() {
-  const url = 'https://api.themoviedb.org/3/trending/tv/day?language=en-US';
+  const url = "https://api.themoviedb.org/3/trending/tv/day?language=en-US";
   return fetchData(url);
 }
 
@@ -69,6 +69,11 @@ export async function fetchMovieKeywordsById(movieId) {
 
 export async function fetchMovieRecommentdationsById(movieId) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}/recommendations?language=en-US&page=1`;
+  return fetchData(url);
+}
+
+export async function fetchMovieReviewsById(movieId) {
+  const url = `https://api.themoviedb.org/3/movie/${movieId}/reviews?language=en-US&page=1`;
   return fetchData(url);
 }
 

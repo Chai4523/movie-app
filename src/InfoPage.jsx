@@ -12,13 +12,14 @@ import styles from "./infoPage.module.css";
 import * as api from "./utils/apiHelper";
 import PersonCarousel from "./components/person-carousel/PersonCarousel";
 import MediaCarousel from "./components/media-carousel/MediaCarousel";
-import { GenreProvider } from "./contexts/GenreContext";
+import Comment from "./components/comment/Comment";
 
 export default function InfoPage() {
   const [media, setMedia] = useState(null);
   const [credit, setCredit] = useState(null);
   const [keyword, setKeyword] = useState(null);
   const [recommendation, setRecommendation] = useState(null);
+  const [review, setReview] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -35,10 +36,12 @@ export default function InfoPage() {
         const creditRes = await api.fetchMovieCreditsById(movieId);
         const keywordRes = await api.fetchMovieKeywordsById(movieId);
         const recommendRes = await api.fetchMovieRecommentdationsById(movieId);
+        const reviewRes = await api.fetchMovieReviewsById(movieId);
         setMedia(mediaRes);
         setCredit(creditRes);
         setKeyword(keywordRes.keywords);
         setRecommendation(recommendRes);
+        setReview(reviewRes);
       } catch (err) {
         setError(err);
         throw new Error("Unable to load info:", err);
@@ -51,13 +54,14 @@ export default function InfoPage() {
   }, []);
 
   useEffect(() => {
-    if (media && credit && keyword && recommendation) {
+    if (media && credit && keyword && recommendation && review) {
       console.log("Media updated:", media);
       console.log("Credit updated:", credit);
       console.log("keyword updated:", keyword);
       console.log("recommendation updated:", recommendation);
+      console.log("review updated:", review);
     }
-  }, [media, credit, keyword, recommendation]);
+  }, [media, credit, keyword, recommendation, review]);
 
   const poster = media ? api.getImage(media.poster_path, "w342") : null;
   const backdrop = media ? api.getImage(media.backdrop_path, "w780") : null;
@@ -214,6 +218,7 @@ export default function InfoPage() {
           </div>
 
           {credit && <PersonCarousel data={credit.cast} />}
+          {review && <Comment data={review} />}
           {recommendation && (
             <MediaCarousel
               data={recommendation.results}
