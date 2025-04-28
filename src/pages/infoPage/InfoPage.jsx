@@ -9,10 +9,10 @@ import {
   Tooltip,
 } from "@mantine/core";
 import styles from "./infoPage.module.css";
-import * as api from "./utils/apiHelper";
-import PersonCarousel from "./components/person-carousel/PersonCarousel";
-import MediaCarousel from "./components/media-carousel/MediaCarousel";
-import Comment from "./components/comment/Comment";
+import * as api from "../../utils/apiHelper";
+import PersonCarousel from "../../components/person-carousel/PersonCarousel";
+import MediaCarousel from "../../components/media-carousel/MediaCarousel";
+import Comment from "../../components/comment/Comment";
 
 export default function InfoPage() {
   const [media, setMedia] = useState(null);

@@ -1,10 +1,10 @@
 import React from "react";
-import * as api from "./utils/apiHelper.js";
+import * as api from "../../utils/apiHelper.js";
 import { useEffect } from "react";
 import { useState } from "react";
-import HeroCarousel from "./components/hero-carousel/HeroCarousel.jsx";
-import MediaCarousel from "./components/media-carousel/MediaCarousel.jsx";
-import { GenreProvider } from "./contexts/GenreContext.jsx";
+import HeroCarousel from "../../components/hero-carousel/HeroCarousel.jsx";
+import MediaCarousel from "../../components/media-carousel/MediaCarousel.jsx";
+import { GenreProvider } from "../../contexts/GenreContext.jsx";
 
 export default function Home() {
   const [trendingAll, setTrendingAll] = useState(null);
