@@ -16,8 +16,9 @@ import Comment from "../../components/comment/Comment";
 
 export default function InfoPage() {
   const [media, setMedia] = useState(null);
-  const [credit, setCredit] = useState(null);
+  const [rating, setRating] = useState(null);
   const [keyword, setKeyword] = useState(null);
+  const [credit, setCredit] = useState(null);
   const [recommendation, setRecommendation] = useState(null);
   const [review, setReview] = useState(null);
   const [error, setError] = useState(null);
@@ -28,20 +29,26 @@ export default function InfoPage() {
 
   const movieId = 950387;
   const tvId = 100088;
+  const mediaType = "tv"
+  const id = mediaType === "movie" ? movieId : tvId
+
+  // TODO: reviews pagination, cast carousel hide controls if unecessary
 
   useEffect(() => {
     const init = async () => {
       try {
-        const mediaRes = await api.fetchMovieById(movieId);
-        const creditRes = await api.fetchMovieCreditsById(movieId);
-        const keywordRes = await api.fetchMovieKeywordsById(movieId);
-        const recommendRes = await api.fetchMovieRecommentdationsById(movieId);
-        const reviewRes = await api.fetchMovieReviewsById(movieId);
+        const mediaRes = await api.fetchMediaById(id, mediaType);
+        const creditRes = await api.fetchCreditsById(id, mediaType);
+        const keywordRes = await api.fetchKeywordsById(id, mediaType);
+        const recommendRes = await api.fetchRecommentdationsById(id, mediaType);
+        const reviewRes = await api.fetchReviewsById(id, mediaType);
+        const ratingRes = await api.getMediaRating(id, mediaType);
         setMedia(mediaRes);
         setCredit(creditRes);
-        setKeyword(keywordRes.keywords);
+        setKeyword(mediaType === "movie" ? keywordRes.keywords : keywordRes.results);
         setRecommendation(recommendRes);
         setReview(reviewRes);
+        setRating(api.extractRating(ratingRes, mediaType));
       } catch (err) {
         setError(err);
         throw new Error("Unable to load info:", err);
@@ -54,18 +61,21 @@ export default function InfoPage() {
   }, []);
 
   useEffect(() => {
-    if (media && credit && keyword && recommendation && review) {
+    if (media && credit && keyword && recommendation && review && rating) {
       console.log("Media updated:", media);
       console.log("Credit updated:", credit);
       console.log("keyword updated:", keyword);
       console.log("recommendation updated:", recommendation);
       console.log("review updated:", review);
+      console.log("rating updated:", rating);
     }
-  }, [media, credit, keyword, recommendation, review]);
+  }, [media, credit, keyword, recommendation, rating]);
 
   const poster = media ? api.getImage(media.poster_path, "w342") : null;
   const backdrop = media ? api.getImage(media.backdrop_path, "w780") : null;
   const keywordsTrimmed = keyword ? keyword.slice(0, 3) : null;
+  const displayTitle = media ? media.title || media.name : null;
+  const displayDate = media ? media.release_date || media.first_air_date : null;
 
   const onToggleKeywords = () => {
     if (!toggleKeywords) {
@@ -132,7 +142,7 @@ export default function InfoPage() {
               />
             </div>
             <ScrollArea className={styles.right} type="auto" offsetScrollbars>
-              <Title c="white">{media.title}</Title>
+              <Title c="white">{displayTitle}</Title>
               <Text fs={"italic"} opacity={0.8} mt={5} mb={15}>
                 {media.tagline}
               </Text>
@@ -166,14 +176,29 @@ export default function InfoPage() {
 
               <Text className={styles["border-btm"]}>
                 <span className={styles["label-white"]}>Ratings: </span>
-                {media.adult
-                  ? "Contains adult content"
-                  : "Suitable for all audiences"}
+                {rating}
               </Text>
-              <Text pt={15} className={styles["border-btm"]}>
-                <span className={styles["label-white"]}>Running time: </span>
-                {formatRuntime(media.runtime)}
-              </Text>
+              {media.number_of_episodes && (
+                <Box
+                  pt={15}
+                  className={`${styles.row} ${styles["border-btm"]}`}
+                >
+                  <Text>
+                    <span className={styles["label-white"]}>Seasons: </span>
+                    {media.number_of_seasons}
+                  </Text>
+                  <Text>
+                    <span className={styles["label-white"]}>Episodes: </span>
+                    {media.number_of_episodes}
+                  </Text>
+                </Box>
+              )}
+              {media.runtime && (
+                <Text pt={15} className={styles["border-btm"]}>
+                  <span className={styles["label-white"]}>Running time: </span>
+                  {formatRuntime(media.runtime)}
+                </Text>
+              )}
               <Box pt={15} className={`${styles.row} ${styles["border-btm"]}`}>
                 <Text>
                   <span className={styles["label-white"]}>Status: </span>
@@ -181,19 +206,36 @@ export default function InfoPage() {
                 </Text>
                 <Text>
                   <span className={styles["label-white"]}>Release Date: </span>
-                  {formatDate(media.release_date)}
+                  {formatDate(displayDate)}
                 </Text>
               </Box>
-              <Box pt={15} className={`${styles.row} ${styles["border-btm"]}`}>
-                <Text>
-                  <span className={styles["label-white"]}>Budget: </span>
-                  {formatCurrency(media.budget)}
+              {media.budget && (
+                <Box
+                  pt={15}
+                  className={`${styles.row} ${styles["border-btm"]}`}
+                >
+                  <Text>
+                    <span className={styles["label-white"]}>Budget: </span>
+                    {formatCurrency(media.budget)}
+                  </Text>
+                  <Text>
+                    <span className={styles["label-white"]}>Revenue: </span>
+                    {formatCurrency(media.revenue)}
+                  </Text>
+                </Box>
+              )}
+              {media.networks && (
+                <Text pt={15} className={styles["border-btm"]}>
+                  <span className={styles["label-white"]}>Networks: </span>
+                  {media.networks.map((n) => n.name).join(", ")}
                 </Text>
-                <Text>
-                  <span className={styles["label-white"]}>Revenue: </span>
-                  {formatCurrency(media.revenue)}
+              )}
+              {media.created_by && (
+                <Text pt={15} className={styles["border-btm"]}>
+                  <span className={styles["label-white"]}>Creator: </span>
+                  {media.created_by.map((c) => c.name).join(", ")}
                 </Text>
-              </Box>
+              )}
               <Text pt={15} className={styles["border-btm"]}>
                 <span className={styles["label-white"]}>Origin Country: </span>
                 {media.origin_country}

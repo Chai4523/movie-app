@@ -52,29 +52,78 @@ export async function fetchMovieGenre() {
   return fetchData(url);
 }
 
-export async function fetchMovieById(movieId) {
-  const url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
+export async function fetchMediaById(id, mediaType) {
+  let url = "";
+  if (mediaType === "movie")
+    url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
+  else if (mediaType === "tv")
+    url = `https://api.themoviedb.org/3/tv/${id}?language=en-US`;
+
   return fetchData(url);
 }
 
-export async function fetchMovieCreditsById(movieId) {
-  const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`;
+export async function fetchCreditsById(id, mediaType) {
+  let url = "";
+  if (mediaType === "movie")
+    url = `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`;
+  else if (mediaType === "tv")
+    url = `https://api.themoviedb.org/3/tv/${id}/credits?language=en-US`;
+
   return fetchData(url);
 }
 
-export async function fetchMovieKeywordsById(movieId) {
-  const url = `https://api.themoviedb.org/3/movie/${movieId}/keywords`;
+export async function fetchKeywordsById(id, mediaType) {
+  let url = "";
+  if (mediaType === "movie")
+    url = `https://api.themoviedb.org/3/movie/${id}/keywords`;
+  else if (mediaType === "tv")
+    url = `https://api.themoviedb.org/3/tv/${id}/keywords`;
+
   return fetchData(url);
 }
 
-export async function fetchMovieRecommentdationsById(movieId) {
-  const url = `https://api.themoviedb.org/3/movie/${movieId}/recommendations?language=en-US&page=1`;
+export async function fetchRecommentdationsById(id, mediaType) {
+  let url = "";
+  if (mediaType === "movie")
+    url = `https://api.themoviedb.org/3/movie/${id}/recommendations?language=en-US&page=1`;
+  else if (mediaType === "tv")
+    url = `https://api.themoviedb.org/3/tv/${id}/recommendations?language=en-US&page=1`;
+
   return fetchData(url);
 }
 
-export async function fetchMovieReviewsById(movieId) {
-  const url = `https://api.themoviedb.org/3/movie/${movieId}/reviews?language=en-US&page=1`;
+export async function fetchReviewsById(id, mediaType) {
+  let url = "";
+  if (mediaType === "movie")
+    url = `https://api.themoviedb.org/3/movie/${id}/reviews?language=en-US&page=1`;
+  else if (mediaType === "tv")
+    url = `https://api.themoviedb.org/3/tv/${id}/reviews?language=en-US&page=1`;
+
   return fetchData(url);
+}
+
+export async function getMediaRating(id, mediaType) {
+  let url = "";
+  if (mediaType === "movie")
+    url = `https://api.themoviedb.org/3/movie/${id}/release_dates`;
+  else if (mediaType === "tv")
+    url = `https://api.themoviedb.org/3/tv/${id}/content_ratings`;
+
+  return fetchData(url);
+}
+
+export function extractRating(data, mediaType, countryCode = "US") {
+  if (mediaType === "movie") {
+    const entry = data.results.find((r) => r.iso_3166_1 === countryCode);
+    const certification = entry?.release_dates.find(
+      (r) => r.certification
+    )?.certification;
+    return certification || "NR";
+  } else if (mediaType === "tv") {
+    const entry = data.results.find((r) => r.iso_3166_1 === countryCode);
+    return entry?.rating || "NR";
+  }
+  return "NR";
 }
 
 export function getImage(imgPath, size) {
