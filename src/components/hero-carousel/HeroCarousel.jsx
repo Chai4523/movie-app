@@ -20,8 +20,10 @@ import { GenreProvider, useGenres } from "../../contexts/GenreContext";
 import { FaCircleInfo } from "react-icons/fa6";
 import { CiBookmark } from "react-icons/ci";
 import { TbChevronLeft, TbChevronRight } from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
 
 function Hero({
+  id,
   backdrop_path,
   poster_path,
   title,
@@ -36,6 +38,7 @@ function Hero({
   const iconInfo = <FaCircleInfo size={18} />;
   const displayTitle = title || name;
   const { getGenreByIds, loading } = useGenres();
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -62,6 +65,7 @@ function Hero({
             color="black"
             leftSection={iconInfo}
             size="lg"
+            onClick={() => navigate(`/${media_type}/${id}`)}
           >
             More Info
           </Button>

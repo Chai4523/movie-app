@@ -17,9 +17,12 @@ import HoverInfo from "./HoverInfo";
 import { TbChevronLeft, TbChevronRight } from "react-icons/tb";
 import { useState } from "react";
 import { GenreProvider } from "../../contexts/GenreContext";
+import { Link } from "react-router-dom";
 
 function Card(props) {
   const {
+    id,
+    adult,
     backdrop_path,
     poster_path,
     title,
@@ -27,6 +30,7 @@ function Card(props) {
     overview,
     media_type,
     genre_ids,
+    vote_count,
     vote_average,
     first_air_date,
     release_date,
@@ -68,7 +72,7 @@ function Card(props) {
       disabled={disabled}
     >
       <HoverCard.Target>
-        <div className={styles.card}>
+        <Link className={styles.card} to={`/${media_type}/${id}`}>
           <img src={poster} alt="" className={styles["card-poster"]} />
           <Box className={styles.info}>
             <RingProgress
@@ -95,7 +99,7 @@ function Card(props) {
               <Text>{formatMediaType(media_type)}</Text>
             </Box>
           </Box>
-        </div>
+        </Link>
       </HoverCard.Target>
       <HoverCard.Dropdown p={0} className={styles["br-10"]}>
         {disabled || (

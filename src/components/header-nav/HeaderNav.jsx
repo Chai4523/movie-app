@@ -10,6 +10,7 @@ import { FiTv } from "react-icons/fi";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 
 export default function HeaderNav() {
   const [showHeader, setShowHeader] = useState(true);
@@ -42,8 +43,10 @@ export default function HeaderNav() {
       >
         <div className={styles["blur-bg"]}></div>
         <Group>
-          <IoTvOutline />
-          <h3 className="header-name">movie-app</h3>
+          <Link className={styles.logo} to={"/"}>
+            <IoTvOutline />
+            <h3>movie-app</h3>
+          </Link>
         </Group>
 
         <Group className={styles["nav-links"]}>

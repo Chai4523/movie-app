@@ -8,10 +8,12 @@ import { FaStar } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 import { FaShare } from "react-icons/fa";
 import { FaCircleInfo } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 
 export default function HoverInfo(props) {
   const {
+    id,
     backdrop_path,
     poster_path,
     title,
@@ -28,6 +30,7 @@ export default function HoverInfo(props) {
   const displayTitle = title || name;
   const backdrop = api.getImage(backdrop_path, "w780");
   const { getGenreByIds, loading } = useGenres();
+  const navigate = useNavigate();
 
   const iconInfo = <FaCircleInfo size={18} />;
 
@@ -59,6 +62,7 @@ export default function HoverInfo(props) {
             leftSection={iconInfo}
             radius={5}
             w={220}
+            onClick={() => navigate(`/${media_type}/${id}`)}
           >
             More info
           </Button>

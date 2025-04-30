@@ -13,63 +13,24 @@ import * as api from "../../utils/apiHelper";
 import PersonCarousel from "../../components/person-carousel/PersonCarousel";
 import MediaCarousel from "../../components/media-carousel/MediaCarousel";
 import Comment from "../../components/comment/Comment";
+import { useLoaderData } from "react-router-dom";
 
 export default function InfoPage() {
-  const [media, setMedia] = useState(null);
-  const [rating, setRating] = useState(null);
-  const [keyword, setKeyword] = useState(null);
-  const [credit, setCredit] = useState(null);
-  const [recommendation, setRecommendation] = useState(null);
-  const [review, setReview] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-
   const [toggleKeywords, setToggleKeywords] = useState(false);
   const [toggleKeywordsTxt, setToggleKeywordsTxt] = useState("Show more");
 
-  const movieId = 950387;
-  const tvId = 100088;
-  const mediaType = "tv"
-  const id = mediaType === "movie" ? movieId : tvId
+  const {
+    id,
+    mediaType,
+    media,
+    credit,
+    keyword,
+    recommendation,
+    review,
+    rating,
+  } = useLoaderData()
 
   // TODO: reviews pagination, cast carousel hide controls if unecessary
-
-  useEffect(() => {
-    const init = async () => {
-      try {
-        const mediaRes = await api.fetchMediaById(id, mediaType);
-        const creditRes = await api.fetchCreditsById(id, mediaType);
-        const keywordRes = await api.fetchKeywordsById(id, mediaType);
-        const recommendRes = await api.fetchRecommentdationsById(id, mediaType);
-        const reviewRes = await api.fetchReviewsById(id, mediaType);
-        const ratingRes = await api.getMediaRating(id, mediaType);
-        setMedia(mediaRes);
-        setCredit(creditRes);
-        setKeyword(mediaType === "movie" ? keywordRes.keywords : keywordRes.results);
-        setRecommendation(recommendRes);
-        setReview(reviewRes);
-        setRating(api.extractRating(ratingRes, mediaType));
-      } catch (err) {
-        setError(err);
-        throw new Error("Unable to load info:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    init();
-  }, []);
-
-  useEffect(() => {
-    if (media && credit && keyword && recommendation && review && rating) {
-      console.log("Media updated:", media);
-      console.log("Credit updated:", credit);
-      console.log("keyword updated:", keyword);
-      console.log("recommendation updated:", recommendation);
-      console.log("review updated:", review);
-      console.log("rating updated:", rating);
-    }
-  }, [media, credit, keyword, recommendation, rating]);
 
   const poster = media ? api.getImage(media.poster_path, "w342") : null;
   const backdrop = media ? api.getImage(media.backdrop_path, "w780") : null;
@@ -126,7 +87,6 @@ export default function InfoPage() {
 
   return (
     <>
-      {!loading && (
         <div>
           <img
             src={backdrop}
@@ -269,7 +229,6 @@ export default function InfoPage() {
             />
           )}
         </div>
-      )}
     </>
   );
 }
