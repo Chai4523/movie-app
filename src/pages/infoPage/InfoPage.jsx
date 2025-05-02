@@ -31,6 +31,11 @@ export default function InfoPage() {
   } = useLoaderData()
 
   // TODO: reviews pagination, cast carousel hide controls if unecessary
+  // TODO: empty review placeholder
+  // TODO: empty recommendation
+  // TODO: empty cast
+  // TODO: scroll to top on page load for all scrollable area
+  // TODO: collapse comment
 
   const poster = media ? api.getImage(media.poster_path, "w342") : null;
   const backdrop = media ? api.getImage(media.backdrop_path, "w780") : null;

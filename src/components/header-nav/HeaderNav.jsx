@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Group, Input } from "@mantine/core";
+import { Box, Group, Input, Text } from "@mantine/core";
 import "@mantine/core/styles.css";
 import styles from "./headerNav.module.css";
 import { MdSearch } from "react-icons/md";
@@ -50,12 +50,10 @@ export default function HeaderNav() {
         </Group>
 
         <Group className={styles["nav-links"]}>
-          <Box className={styles["nav-item"]}>
+          <Link className={styles["nav-item"]} to={`/search`}>
             <FaFilm />
-            <a href="#" onClick={(event) => event.preventDefault()}>
-              Movies
-            </a>
-          </Box>
+            <Text className={styles["nav-label"]}>Movies</Text>
+          </Link>
           <Box className={styles["nav-item"]}>
             <FiTv />
             <a href="#" onClick={(event) => event.preventDefault()}>

@@ -112,6 +112,12 @@ export async function getMediaRating(id, mediaType) {
   return fetchData(url);
 }
 
+export async function searchMovies() {
+  let url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc`;
+
+  return fetchData(url);
+}
+
 export function extractRating(data, mediaType, countryCode = "US") {
   if (mediaType === "movie") {
     const entry = data.results.find((r) => r.iso_3166_1 === countryCode);

@@ -6,6 +6,7 @@ import InfoPage from "../pages/infoPage/InfoPage";
 import SearchPage from "../pages/searchPage/SearchPage";
 import { homeLoader } from "./loader/homeLoader";
 import { infoLoader } from "./loader/InfoLoader";
+import { searchLoader } from "./loader/searchLoader";
 
 const router = createBrowserRouter([
   {
@@ -24,8 +25,9 @@ const router = createBrowserRouter([
         loader: infoLoader,
       },
       {
-        path: "search/:query",
+        path: "search",
         element: <SearchPage />,
+        loader: searchLoader
       },
     ],
   },
