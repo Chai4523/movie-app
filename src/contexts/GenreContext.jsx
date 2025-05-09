@@ -16,6 +16,8 @@ export const useGenres = () => {
 };
 
 export const GenreProvider = ({ children }) => {
+  const [tvGenre, setTvGenre] = useState([]);
+  const [movieGenre, setMovieGenre] = useState([]);
   const [tmdbGenreMap, setTmdbGenreMap] = useState({});
   const [loading, setLoading] = useState(true);
 
@@ -29,6 +31,8 @@ export const GenreProvider = ({ children }) => {
           ...(tvGenreRes.genres || []),
           ...(movieGenreRes.genres || []),
         ];
+        setTvGenre(tvGenreRes.genres);
+        setMovieGenre(movieGenreRes.genres);
 
         const tmdbMap = {};
         for (const genre of tmdbGenre) {
@@ -57,8 +61,18 @@ export const GenreProvider = ({ children }) => {
     }
   }
 
+  function getTvGenre() {
+    return tvGenre;
+  }
+
+  function getMovieGenre() {
+    return movieGenre;
+  }
+
   return (
-    <GenreContext.Provider value={{ getGenreByIds, loading }}>
+    <GenreContext.Provider
+      value={{ getGenreByIds, getTvGenre, getMovieGenre, loading }}
+    >
       {children}
     </GenreContext.Provider>
   );

@@ -1,16 +1,15 @@
 import * as api from "../../utils/apiHelper";
 
 export async function searchLoader({ params }) {
-    const url = new URL(params.url)
-    const genre = url.searchParams.get("genre")
-    
+  // const url = new URL(params.url)
+  // const genre = url.searchParams.get("genre")
+
   try {
-    const [movie] = await Promise.all([
-      api.searchMovies()
+    const [{ page, results, total_pages, total_results }] = await Promise.all([
+      api.searchMovies(),
     ]);
 
-    return {movie
-    };
+    return { page, results, total_pages, total_results };
   } catch (error) {
     console.error("Failed to load search information", error);
     throw new Response("Failed to load search information.", {

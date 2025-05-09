@@ -52,20 +52,16 @@ export default function HeaderNav() {
         <Group className={styles["nav-links"]}>
           <Link className={styles["nav-item"]} to={`/search`}>
             <FaFilm />
-            <Text className={styles["nav-label"]}>Movies</Text>
+            <Text pl={6}>Movies</Text>
           </Link>
-          <Box className={styles["nav-item"]}>
+          <Link className={styles["nav-item"]} to={`/`}>
             <FiTv />
-            <a href="#" onClick={(event) => event.preventDefault()}>
-              Shows
-            </a>
-          </Box>
-          <Box className={styles["nav-item"]}>
+            <Text pl={6}>Shows</Text>
+          </Link>
+          <Link className={styles["nav-item"]} to={`/`}>
             <SiMyanimelist />
-            <a href="#" onClick={(event) => event.preventDefault()}>
-              Anime
-            </a>
-          </Box>
+            <Text pl={6}>Anime</Text>
+          </Link>
           <Input
             size="md"
             placeholder="Search"
