@@ -77,7 +77,7 @@ export default function SearchPage() {
       {results && (
         <Box className={styles["search-results"]}>
           {results.map((res) => (
-            <MediaCard {...res} />
+            <MediaCard {...res} media_type={mediaType} />
           ))}
         </Box>
       )}

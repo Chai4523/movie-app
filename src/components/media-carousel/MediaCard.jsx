@@ -4,7 +4,7 @@ import * as api from "../../utils/apiHelper";
 import styles from "./mediaCarousel.module.css";
 import { Box, RingProgress, Text } from "@mantine/core";
 
-export default function MediaCard(data) {
+export default function MediaCard(props) {
   const {
     id,
     backdrop_path,
@@ -17,13 +17,7 @@ export default function MediaCard(data) {
     vote_average,
     first_air_date,
     release_date,
-    disabled,
-  } = data;
-  console.log("card", data)
-
-  const displayTitle = title || name;
-  const poster = api.getImage(poster_path, "w342");
-  const releaseDate = release_date || first_air_date;
+  } = props;
 
   const ringColor = (vote_average) => {
     if (vote_average > 7) return "green";
@@ -41,14 +35,17 @@ export default function MediaCard(data) {
     }).format(date);
   };
 
-  const displayDate = releaseDate ? formatDate(releaseDate) : "Date N/A";
-
   const formatMediaType = (media_type) => {
     if (media_type == "tv") return "TV";
     return (
       String(media_type).charAt(0).toUpperCase() + String(media_type).slice(1)
     );
   };
+  
+  const displayTitle = title || name;
+  const poster = api.getImage(poster_path, "w342");
+  const releaseDate = release_date || first_air_date;
+  const displayDate = releaseDate ? formatDate(releaseDate) : "Date N/A";
 
   return (
     <Link className={styles.card} to={`/${media_type}/${id}`}>

@@ -13,6 +13,7 @@
 }
 
 .card-poster {
+  height: 297px;
   width: 100%;
   background-size: cover;
   background-position: center;
@@ -55,7 +56,6 @@
   z-index: 2;
   position: relative;
   padding: 10px 25px;
-
 }
 
 .hover-content .info-row {
@@ -80,16 +80,15 @@
   color: gold;
 }
 
-.hover-content .button-row{
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 10px;
-    padding: 15px 0;
+.hover-content .button-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 15px 0;
 }
 
 .control {
-
   &[data-inactive] {
     opacity: 0;
     cursor: default;
