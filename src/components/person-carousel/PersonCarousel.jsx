@@ -15,7 +15,7 @@ function PersonSlide({
   profile_path,
   character,
 }) {
-  const profile = api.getImage(profile_path, "w185") || "./avatar.png";
+  const profile = api.getImage(profile_path, "w185") || "/avatar.png";
 
   return (
     <div>

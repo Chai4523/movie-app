@@ -78,7 +78,8 @@ export async function fetchReviewsById(id, mediaType) {
 }
 
 export async function getMediaRating(id, mediaType) {
-  const url = `${TMDB_BASE_URL}/${mediaType}/${id}/release_dates`;
+  const path = mediaType === "movie" ? "release_dates" : "content_ratings"
+  const url = `${TMDB_BASE_URL}/${mediaType}/${id}/${path}`;
   return fetchData(url);
 }
 

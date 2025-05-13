@@ -11,3 +11,5 @@ createRoot(document.getElementById("root")).render(
     <RouterProvider router={router} />
   </MantineProvider>
 );
+
+// TODO: https://stackoverflow.com/questions/60813961/react-scroll-to-top-on-page-refresh-dont-restore-position/72478740#72478740

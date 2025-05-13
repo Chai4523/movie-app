@@ -24,7 +24,7 @@ export default function Comment(props) {
       created_at,
       url,
     }) => {
-      const avatar = api.getImage(avatar_path, "w45") || "./avatar.png";
+      const avatar = api.getImage(avatar_path, "w45") || "/avatar.png";
 
       return (
         <Box key={id} className={styles.comment}>
