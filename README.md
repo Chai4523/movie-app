@@ -1,12 +1,71 @@
-# React + Vite
+# 🎬 Movie App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fully responsive movie and TV discovery app built with **React**, using **The Movie Database (TMDB) API** and **Mantine UI**. This project showcases real-world use of React Router, custom hooks, dynamic routing, debounced search, genre-based filtering, and client-side pagination.
 
-Currently, two official plugins are available:
+> Live Demo: [c4523-movie-app.vercel.app](https://c4523-movie-app.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![screenshot](./public/screenshot_1.png)(./public/screenshot_2.png)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Features
+
+- 🔎 **Search movies and TV shows** with debounced input
+- 🎛 **Filter by genre**
+- 🔁 **Pagination** for result navigation
+- 🎥 **Media type toggle** (`movie` / `tv`)
+- 🖼 Responsive **media cards** using TMDB assets
+- 🌐 Dynamic routes (`/search/movie`, `/search/tv`) with URL-sync
+- 🧠 Smart image fallback for missing profile pictures
+- 📦 Clean folder structure with custom hooks and contexts
+
+---
+
+## 🛠️ Built With
+
+- **React** (with hooks)
+- **React Router v6+**
+- **Mantine UI**
+- **TMDB API** – for movie & TV metadata
+- **Vite** – fast development setup
+
+---
+
+## 📁 Project Structure
+
+```bash
+src/
+├── components/        # UI components (MediaCard, Carousel, etc.)
+├── contexts/          # React contexts (e.g., GenreContext)
+├── hooks/             # Custom hooks (e.g., useTmdbSearch)
+├── pages/             # Page components (SearchPage, etc.)
+├── utils/             # API helpers and config
+└── App.jsx            # Main app layout and routes
+```
+
+---
+
+## 📅 Coming Soon
+
+These features are in development to enhance the discovery experience:
+
+📺 Anime Search & Discovery powered by Jikan API
+❤️ Save favorites
+
+Stay tuned!
+
+---
+
+## 🤝 Acknowledgements
+
+🎞 TMDB API – for providing high-quality movie and TV metadata
+🎌 Jikan API – for upcoming anime support (Unofficial MyAnimeList API)
+🧩 Mantine UI – for fast, accessible component library
+🚀 Vercel – for easy deployment and hosting
+
+---
+
+## 📫 Contact
+
+Made by Chai Chung Yee
+Feel free to reach out if you’d like to collaborate or chat!
