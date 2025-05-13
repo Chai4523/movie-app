@@ -4,7 +4,7 @@ A fully responsive movie and TV discovery app built with **React**, using **The 
 
 > Live Demo: [c4523-movie-app.vercel.app](https://c4523-movie-app.vercel.app)
 
-![screenshot](./public/screenshot_1.png)(./public/screenshot_2.png)
+![screenshot](./public/screenshot_1.png) ![screenshot](./public/screenshot_2.png)
 
 ---
 
@@ -49,8 +49,8 @@ src/
 
 These features are in development to enhance the discovery experience:
 
-📺 Anime Search & Discovery powered by Jikan API
-❤️ Save favorites
+- 📺 Anime Search & Discovery powered by Jikan API
+- ❤️ Save favorites
 
 Stay tuned!
 
@@ -58,14 +58,9 @@ Stay tuned!
 
 ## 🤝 Acknowledgements
 
-🎞 TMDB API – for providing high-quality movie and TV metadata
-🎌 Jikan API – for upcoming anime support (Unofficial MyAnimeList API)
-🧩 Mantine UI – for fast, accessible component library
-🚀 Vercel – for easy deployment and hosting
+- 🎞 TMDB API – for providing high-quality movie and TV metadata
+- 🎌 Jikan API – for upcoming anime support (Unofficial MyAnimeList API)
+- 🧩 Mantine UI – for fast, accessible component library
+- 🚀 Vercel – for easy deployment and hosting
 
 ---
-
-## 📫 Contact
-
-Made by Chai Chung Yee
-Feel free to reach out if you’d like to collaborate or chat!
