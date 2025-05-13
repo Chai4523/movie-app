@@ -62,11 +62,6 @@ export default function HeaderNav() {
             <SiMyanimelist />
             <Text pl={6}>Anime</Text>
           </Link>
-          {/* <Input
-            size="md"
-            placeholder="Search"
-            leftSection={<MdSearch size={16} stroke={1.5} />}
-          /> */}
         </Group>
       </header>
     </>

@@ -51,7 +51,6 @@ export const GenreProvider = ({ children }) => {
   }, []);
 
   function getGenreByIds(ids) {
-    // const genreMap = mediaType === "tmdb" ? tmdbGenreMap : undefined;
     const genreMap = tmdbGenreMap;
 
     if (Array.isArray(ids)) {
