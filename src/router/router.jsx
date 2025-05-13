@@ -6,7 +6,6 @@ import InfoPage from "../pages/infoPage/InfoPage";
 import SearchPage from "../pages/searchPage/SearchPage";
 import { homeLoader } from "./loader/homeLoader";
 import { infoLoader } from "./loader/infoLoader";
-import { searchLoader } from "./loader/searchLoader";
 import { GenreProvider } from "../contexts/GenreContext";
 
 const router = createBrowserRouter([
@@ -26,13 +25,12 @@ const router = createBrowserRouter([
         loader: infoLoader,
       },
       {
-        path: "search",
+        path: "search/:mediaType",
         element: (
           <GenreProvider>
             <SearchPage />
           </GenreProvider>
         ),
-        loader: searchLoader,
       },
     ],
   },

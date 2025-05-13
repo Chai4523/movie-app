@@ -50,11 +50,11 @@ export default function HeaderNav() {
         </Group>
 
         <Group className={styles["nav-links"]}>
-          <Link className={styles["nav-item"]} to={`/search`}>
+          <Link className={styles["nav-item"]} to={`/search/movie`}>
             <FaFilm />
             <Text pl={6}>Movies</Text>
           </Link>
-          <Link className={styles["nav-item"]} to={`/`}>
+          <Link className={styles["nav-item"]} to={`/search/tv`}>
             <FiTv />
             <Text pl={6}>Shows</Text>
           </Link>
@@ -62,11 +62,11 @@ export default function HeaderNav() {
             <SiMyanimelist />
             <Text pl={6}>Anime</Text>
           </Link>
-          <Input
+          {/* <Input
             size="md"
             placeholder="Search"
             leftSection={<MdSearch size={16} stroke={1.5} />}
-          />
+          /> */}
         </Group>
       </header>
     </>

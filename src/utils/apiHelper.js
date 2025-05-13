@@ -2,7 +2,7 @@ import * as dataSample from "./data";
 
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
-const TMDB_BASE_URL = "";
+const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 const TMDB_BASE_IMG_URL = "https://image.tmdb.org/t/p";
 const JIKAN_BASE_URL = "";
 
@@ -29,92 +29,69 @@ async function fetchData(url) {
 }
 
 export async function fetchTrendingAll() {
-  const url = "https://api.themoviedb.org/3/trending/all/day?language=en-US";
+  const url = `${TMDB_BASE_URL}/trending/all/day?language=en-US`;
   return fetchData(url);
 }
 
 export async function fetchTrendingMovie() {
-  const url = "https://api.themoviedb.org/3/trending/movie/day?language=en-US";
+  const url = `${TMDB_BASE_URL}/trending/movie/day?language=en-US`;
   return fetchData(url);
 }
 
 export async function fetchTrendingTv() {
-  const url = "https://api.themoviedb.org/3/trending/tv/day?language=en-US";
+  const url = `${TMDB_BASE_URL}/trending/tv/day?language=en-US`;
   return fetchData(url);
 }
 
 export async function fetchTvGenre() {
-  const url = "https://api.themoviedb.org/3/genre/tv/list?language=en";
+  const url = `${TMDB_BASE_URL}/genre/tv/list?language=en`;
   return fetchData(url);
 }
 export async function fetchMovieGenre() {
-  const url = "https://api.themoviedb.org/3/genre/movie/list?language=en";
+  const url = `${TMDB_BASE_URL}/genre/movie/list?language=en`;
   return fetchData(url);
 }
 
 export async function fetchMediaById(id, mediaType) {
-  let url = "";
-  if (mediaType === "movie")
-    url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
-  else if (mediaType === "tv")
-    url = `https://api.themoviedb.org/3/tv/${id}?language=en-US`;
-
+  const url = `${TMDB_BASE_URL}/${mediaType}/${id}?language=en-US`;
   return fetchData(url);
 }
 
 export async function fetchCreditsById(id, mediaType) {
-  let url = "";
-  if (mediaType === "movie")
-    url = `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`;
-  else if (mediaType === "tv")
-    url = `https://api.themoviedb.org/3/tv/${id}/credits?language=en-US`;
-
+  const url = `${TMDB_BASE_URL}/${mediaType}/${id}/credits?language=en-US`;
   return fetchData(url);
 }
 
 export async function fetchKeywordsById(id, mediaType) {
-  let url = "";
-  if (mediaType === "movie")
-    url = `https://api.themoviedb.org/3/movie/${id}/keywords`;
-  else if (mediaType === "tv")
-    url = `https://api.themoviedb.org/3/tv/${id}/keywords`;
-
+  const url = `${TMDB_BASE_URL}/${mediaType}/${id}/keywords`;
   return fetchData(url);
 }
 
 export async function fetchRecommentdationsById(id, mediaType) {
-  let url = "";
-  if (mediaType === "movie")
-    url = `https://api.themoviedb.org/3/movie/${id}/recommendations?language=en-US&page=1`;
-  else if (mediaType === "tv")
-    url = `https://api.themoviedb.org/3/tv/${id}/recommendations?language=en-US&page=1`;
-
+  const url = `${TMDB_BASE_URL}/${mediaType}/${id}/recommendations?language=en-US&page=1`;
   return fetchData(url);
 }
 
 export async function fetchReviewsById(id, mediaType) {
-  let url = "";
-  if (mediaType === "movie")
-    url = `https://api.themoviedb.org/3/movie/${id}/reviews?language=en-US&page=1`;
-  else if (mediaType === "tv")
-    url = `https://api.themoviedb.org/3/tv/${id}/reviews?language=en-US&page=1`;
-
+  const url = `${TMDB_BASE_URL}/${mediaType}/${id}/reviews?language=en-US&page=1`;
   return fetchData(url);
 }
 
 export async function getMediaRating(id, mediaType) {
-  let url = "";
-  if (mediaType === "movie")
-    url = `https://api.themoviedb.org/3/movie/${id}/release_dates`;
-  else if (mediaType === "tv")
-    url = `https://api.themoviedb.org/3/tv/${id}/content_ratings`;
-
+  const url = `${TMDB_BASE_URL}/${mediaType}/${id}/release_dates`;
   return fetchData(url);
 }
 
-export async function searchMovies() {
-  let url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc`;
+export async function searchMedia(query = "", page = 1, mediaType) {
+  const url = `${TMDB_BASE_URL}/search/${mediaType}?query=${encodeURIComponent(
+    query
+  )}&page=${page}`;
+  return fetchData(url);
+}
 
+export async function searchMediaByGenre(genre, page = 1, mediaType) {
+  const genreString = genre ? `&with_genres=${genre}` : "";
+  const url = `${TMDB_BASE_URL}/discover/${mediaType}?include_video=false&page=${page}&sort_by=popularity.desc${genreString}`;
   return fetchData(url);
 }
 

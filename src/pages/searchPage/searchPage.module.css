@@ -20,3 +20,12 @@
   margin: 20px 0 40px;
   gap: 20px;
 }
+
+.pagination {
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.jc-center {
+  justify-content: center;
+}
