@@ -40,6 +40,6 @@ Stay tuned!
 
 ## 🤝 Acknowledgements
 
-![TMDB logo](./public/tmdb.svg)
+<img height="50px" src="./public/tmdb.svg">
 
 This project uses the TMDB API but is not endorsed or certified by TMDB.
