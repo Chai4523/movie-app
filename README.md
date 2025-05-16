@@ -1,8 +1,9 @@
-# 🎬 Movie App
+<h1 align="center">🎬 Movie App</h1>
+<br>
 
-A movie and TV discovery app built with [React](https://react.dev/), using [The Movie Database](https://www.themoviedb.org) and [Mantine UI](https://mantine.dev/).
+> A movie and TV discovery app built with [React](https://react.dev/), using [The Movie Database](https://www.themoviedb.org) and [Mantine UI](https://mantine.dev/).
 
-> Live Demo: [c4523-movie-app.vercel.app](https://c4523-movie-app.vercel.app)
+Live Demo: [c4523-movie-app.vercel.app](https://c4523-movie-app.vercel.app)
 
 ## 📁 Screenshots
 
@@ -32,7 +33,7 @@ pnpm run dev
 
 These features are in development to enhance the discovery experience:
 
-- Responsive View
+- 📱💻🖥️ Responsive View
 - 📺 Anime Search & Discovery powered by Jikan API
 - ❤️ Save favorites
 
