@@ -1,7 +1,7 @@
 <h1 align="center">🎬 Movie App</h1>
 <br>
 
-> A movie and TV discovery app built with [React](https://react.dev/), using [The Movie Database](https://www.themoviedb.org) and [Mantine UI](https://mantine.dev/).
+> A Movie and TV discovery app built with [React](https://react.dev/), using [The Movie Database](https://www.themoviedb.org) and [Mantine UI](https://mantine.dev/).
 
 Live Demo: [c4523-movie-app.vercel.app](https://c4523-movie-app.vercel.app)
 
