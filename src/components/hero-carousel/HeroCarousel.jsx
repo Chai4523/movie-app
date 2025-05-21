@@ -21,6 +21,7 @@ import { FaCircleInfo } from "react-icons/fa6";
 import { CiBookmark } from "react-icons/ci";
 import { TbChevronLeft, TbChevronRight } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "@mantine/hooks";
 
 function Hero({
   id,
@@ -32,6 +33,7 @@ function Hero({
   media_type,
   genre_ids,
   vote_average,
+  isMobile
 }) {
   const backdrop = api.getImage(backdrop_path, "w1280");
   const poster = api.getImage(poster_path, "w500");
@@ -64,7 +66,7 @@ function Hero({
             variant="white"
             color="black"
             leftSection={iconInfo}
-            size="lg"
+            size={isMobile ? "sm" : "lg"}
             onClick={() => navigate(`/${media_type}/${id}`)}
           >
             More Info
@@ -72,20 +74,20 @@ function Hero({
           <ActionIcon
             variant="outline"
             aria-label="action icon"
-            size={60}
-            radius={60}
+            size={isMobile ? 48 : 60}
+            radius={isMobile? 48: 60}
             color="dimgrey"
             bd="2px solid dimgrey"
           >
-            <CiBookmark size={30} color="white" />
+            <CiBookmark size={26} color="white" />
           </ActionIcon>
           <RingProgress
-            size={70}
-            thickness={4.8}
+            size={isMobile? 55 : 70}
+            thickness={isMobile? 3 : 4.8}
             roundCaps
             sections={[{ value: vote_average * 10, color: "white" }]}
             label={
-              <Text c="white" fw={500} ta="center" size="lg">
+              <Text c="white" fw={500} ta="center" size={isMobile ? "md" : "lg"}>
                 {Number.parseFloat(vote_average).toFixed(1)}
               </Text>
             }
@@ -102,10 +104,11 @@ function Hero({
 export default function HeroCarousel({ data }) {
   const autoPlay = useRef(Autoplay({ delay: 7000 }));
   const [embla, setEmbla] = useState(null);
+  const isMobile = useMediaQuery('(max-width: 770px)');
 
   const slides = data.map((item) => (
     <Carousel.Slide key={item.id}>
-      <Hero {...item} />
+      <Hero {...item} isMobile={isMobile} />
     </Carousel.Slide>
   ));
 
@@ -118,7 +121,7 @@ export default function HeroCarousel({ data }) {
           loop={true}
           getEmblaApi={setEmbla}
           plugins={[autoPlay.current]}
-          withIndicators
+          withIndicators={!isMobile}
           classNames={styles}
           nextControlIcon={<TbChevronRight size={50} />}
           previousControlIcon={<TbChevronLeft size={50} />}

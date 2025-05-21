@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Group, Input, Text } from "@mantine/core";
+import { Box, Burger, Group, Input, Menu, Text } from "@mantine/core";
 import "@mantine/core/styles.css";
 import styles from "./headerNav.module.css";
 import { MdSearch } from "react-icons/md";
@@ -11,10 +11,12 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
+import { useDisclosure } from "@mantine/hooks";
 
 export default function HeaderNav() {
   const [showHeader, setShowHeader] = useState(true);
   const lastScrollY = useRef(0);
+  const [opened, { toggle }] = useDisclosure();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,6 +65,47 @@ export default function HeaderNav() {
             <Text pl={6}>Anime</Text>
           </Link>
         </Group>
+
+        <Menu opened={opened} onChange={toggle} className={styles.menu}>
+          <Menu.Target>
+            <Box>
+              <Burger
+                opened={opened}
+                onClick={toggle}
+                aria-label="Toggle navigation"
+              />
+            </Box>
+          </Menu.Target>
+          <Menu.Dropdown
+            className={styles["menu-dropdown"]}
+            w={"98vw"}
+            left={0}
+            ml={5}
+            mr={5}
+          >
+            <Link to={`/search/movie`}>
+              <Menu.Item
+                leftSection={<FaFilm />}
+                className={styles["menu-item"]}
+              >
+                Movies
+              </Menu.Item>
+            </Link>
+            <Link to={`/search/tv`}>
+              <Menu.Item leftSection={<FiTv />} className={styles["menu-item"]}>
+                Shows
+              </Menu.Item>
+            </Link>
+            <Link to={`/`}>
+              <Menu.Item
+                leftSection={<SiMyanimelist />}
+                className={styles["menu-item"]}
+              >
+                Anime
+              </Menu.Item>
+            </Link>
+          </Menu.Dropdown>
+        </Menu>
       </header>
     </>
   );

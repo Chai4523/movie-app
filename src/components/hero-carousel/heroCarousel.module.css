@@ -93,3 +93,25 @@
     }
   }
 }
+
+@media (width < 770px) {
+  .poster {
+    display: none;
+  }
+
+  .title {
+    text-align: center;
+  }
+
+  .overview {
+    text-align: center;
+  }
+
+  .genre {
+    text-align: center;
+  }
+
+  .action-row {
+    align-self: center;
+  }
+}

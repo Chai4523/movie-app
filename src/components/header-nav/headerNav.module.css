@@ -65,3 +65,28 @@ a {
     );
   }
 }
+
+.menu {
+  display: none;
+}
+
+@media (width < 770px) {
+  .nav-links {
+    display: none;
+  }
+
+  .menu {
+    display: flex;
+  }
+
+  .menu-dropdown {
+    width: 95vh;
+  }
+
+  .menu-item {
+    padding: 10px;
+    align-items: center;
+    font-size: larger;
+    column-gap: 10px;
+  }
+}
