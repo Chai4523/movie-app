@@ -58,7 +58,7 @@ export default function SearchPage() {
           />
         }
       />
-      <Box className={styles.row}>
+      <Box className={styles["filter-header"]}>
         <Title>Explore {displayMediaType}</Title>
         <SegmentedControl
           value={mediaType}
@@ -80,13 +80,14 @@ export default function SearchPage() {
           setPage(1);
         }}
       >
-        <Group justify="flex-start" mt={30} mb={30}>
+        <Group justify="flex-start" mt={30} mb={30} className={styles.grid}>
           {genre.map((data) => (
             <Chip
               key={data.id}
               radius="md"
-              size="md"
+              size="xl"
               value={data.id.toString()}
+              className={styles.chip}
             >
               {data.name}
             </Chip>
@@ -106,7 +107,12 @@ export default function SearchPage() {
         </Box>
       )}
       <Box className={`${styles.row} ${styles.pagination}`}>
-        <Pagination total={totalPages} value={page} onChange={setPage} />
+        <Pagination
+          total={totalPages}
+          value={page}
+          onChange={setPage}
+          hideWithOnePage
+        />
       </Box>
     </Box>
   );

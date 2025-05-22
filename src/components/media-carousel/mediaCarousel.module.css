@@ -13,7 +13,6 @@
 }
 
 .card-poster {
-  height: 297px;
   width: 100%;
   background-size: cover;
   background-position: center;
@@ -104,6 +103,14 @@
   &:hover {
     .controls {
       opacity: 1;
+    }
+  }
+}
+
+@media (width < 770px) {
+  .info-row {
+    p {
+      font-size: small;
     }
   }
 }

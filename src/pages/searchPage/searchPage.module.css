@@ -1,5 +1,5 @@
 .container {
-  padding: 120px 40px 0;
+  padding: 100px 40px 0;
 }
 
 .input {
@@ -7,6 +7,13 @@
 }
 
 .row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filter-header {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -28,4 +35,46 @@
 
 .jc-center {
   justify-content: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+
+.chip label {
+  width: 100%;
+  padding: 0;
+  text-align: center;
+
+  span {
+    width: 100%;
+    font-size: 16px;
+  }
+}
+
+@media (width < 770px) {
+  .container {
+    padding: 100px 20px 0;
+  }
+
+  .filter-header {
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 10px;
+  }
+
+  .search-results {
+    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+
+  .grid {
+    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+
+  .chip label span {
+    font-size: 14px;
+  }
 }

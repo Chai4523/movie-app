@@ -12,7 +12,7 @@ import "@mantine/carousel/styles.css";
 import { Carousel } from "@mantine/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./heroCarousel.module.css";
 import * as api from "../../utils/apiHelper";
 import { GenreProvider, useGenres } from "../../contexts/GenreContext";
@@ -104,7 +104,12 @@ function Hero({
 export default function HeroCarousel({ data }) {
   const autoPlay = useRef(Autoplay({ delay: 7000 }));
   const [embla, setEmbla] = useState(null);
-  const isMobile = useMediaQuery('(max-width: 770px)');
+  const useMobile = useMediaQuery("(max-width: 770px)");
+  const [isMobile, setIsMobile] = useState(useMobile);
+
+  useEffect(() => {
+    setIsMobile(useMobile);
+  }, [useMobile]);
 
   const slides = data.map((item) => (
     <Carousel.Slide key={item.id}>

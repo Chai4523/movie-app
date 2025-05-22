@@ -10,7 +10,9 @@ export default function Home() {
     <>
       {trendingAll && <HeroCarousel data={trendingAll.results} />}
       {trendingMovie && (
-        <MediaCarousel data={trendingMovie.results} title="Trending Movie" />
+        <div style={{ marginTop: "20px" }}>
+          <MediaCarousel data={trendingMovie.results} title="Trending Movie" />
+        </div>
       )}
       {trendingTv && (
         <MediaCarousel data={trendingTv.results} title="Trending TV Shows" />

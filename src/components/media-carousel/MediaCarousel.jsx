@@ -1,11 +1,5 @@
-import { useState } from "react";
-import {
-  ActionIcon,
-  Box,
-  Group,
-  HoverCard,
-  Title,
-} from "@mantine/core";
+import { useState, useEffect } from "react";
+import { ActionIcon, Box, Group, HoverCard, Title } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
 import { Carousel } from "@mantine/carousel";
@@ -13,6 +7,7 @@ import styles from "./mediaCarousel.module.css";
 import HoverInfo from "./HoverInfo";
 import MediaCard from "./MediaCard";
 import { GenreProvider } from "../../contexts/GenreContext";
+import { useMediaQuery } from "@mantine/hooks";
 
 import { TbChevronLeft, TbChevronRight } from "react-icons/tb";
 
@@ -51,12 +46,18 @@ export default function MediaCarousel({
 
   const handleNext = () => embla?.scrollNext();
   const handlePrev = () => embla?.scrollPrev();
+  const useMobile = useMediaQuery("(max-width: 770px)");
+  const [isMobile, setIsMobile] = useState(useMobile);
 
   const slides = data.map((item) => (
     <Carousel.Slide key={item.id}>
-      <Card {...item} disabled={disabled} />
+      <Card {...item} disabled={disabled || isMobile} />
     </Carousel.Slide>
   ));
+
+  useEffect(() => {
+    setIsMobile(useMobile);
+  }, [useMobile]);
 
   return (
     <>
@@ -64,34 +65,36 @@ export default function MediaCarousel({
         <Title order={2} c={"white"} pos={"relative"} p={10}>
           {title}
         </Title>
-        <Group mr={10}>
-          <ActionIcon
-            onClick={handlePrev}
-            variant="subtle"
-            color="gray"
-            size={"xl"}
-          >
-            <TbChevronLeft size={30} />
-          </ActionIcon>
-          <ActionIcon
-            onClick={handleNext}
-            variant="subtle"
-            color="gray"
-            size={"xl"}
-          >
-            <TbChevronRight size={30} />
-          </ActionIcon>
-        </Group>
+        {!isMobile && (
+          <Group mr={10}>
+            <ActionIcon
+              onClick={handlePrev}
+              variant="subtle"
+              color="gray"
+              size={"xl"}
+            >
+              <TbChevronLeft size={30} />
+            </ActionIcon>
+            <ActionIcon
+              onClick={handleNext}
+              variant="subtle"
+              color="gray"
+              size={"xl"}
+            >
+              <TbChevronRight size={30} />
+            </ActionIcon>
+          </Group>
+        )}
       </Group>
       <Carousel
-        slideSize={210}
-        slideGap="sm"
+        slideSize={isMobile ? 150 : 210}
+        slideGap={isMobile ? "xs" : "sm"}
         align="start"
         containScroll="trimSnaps"
         p={10}
         ml={20}
         mr={20}
-        draggable={false}
+        draggable={isMobile}
         classNames={styles}
         getEmblaApi={setEmbla}
         withControls={false}
