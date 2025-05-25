@@ -70,8 +70,8 @@ export async function fetchRecommentdationsById(id, mediaType) {
   return fetchData(url);
 }
 
-export async function fetchReviewsById(id, mediaType) {
-  const url = `${TMDB_BASE_URL}/${mediaType}/${id}/reviews?language=en-US&page=1`;
+export async function fetchReviewsById(id, mediaType, page = 1) {
+  const url = `${TMDB_BASE_URL}/${mediaType}/${id}/reviews?language=en-US&page=${page}`;
   return fetchData(url);
 }
 

@@ -23,13 +23,12 @@ export default function InfoPage() {
   // TODO: empty recommendation handling
   // TODO: empty cast handling
   // TODO: scroll to top on page load for all scrollable area
-  // TODO: collapse comment
-
+  // TODO: image not available http://localhost:5173/movie/119994(info), http://localhost:5173/movie/1001414(recommendations)
   return (
     <Box>
       <MediaInfo data={{ media, keyword, rating }} />
       {credit && <PersonCarousel data={credit.cast} />}
-      {review && <Comment data={review} />}
+      {review && <Comment data={review} mediaType={mediaType} />}
       {recommendation && (
         <MediaCarousel
           data={recommendation.results}
