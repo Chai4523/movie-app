@@ -33,7 +33,6 @@ pnpm run dev
 
 These features are in development to enhance the discovery experience:
 
-- 📱💻🖥️ Responsive View
 - 📺 Anime Search & Discovery powered by Jikan API
 - ❤️ Save favorites
 
