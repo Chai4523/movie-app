@@ -94,7 +94,6 @@ export default function MediaCarousel({
         p={10}
         ml={20}
         mr={20}
-        draggable={isMobile}
         classNames={styles}
         getEmblaApi={setEmbla}
         withControls={false}

@@ -128,6 +128,7 @@ export default function HeroCarousel({ data }) {
           plugins={[autoPlay.current]}
           withIndicators={!isMobile}
           classNames={styles}
+          withControls={!isMobile}
           nextControlIcon={<TbChevronRight size={50} />}
           previousControlIcon={<TbChevronLeft size={50} />}
         >

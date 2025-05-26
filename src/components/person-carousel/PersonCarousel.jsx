@@ -86,7 +86,6 @@ export default function PersonCarousel({ data }) {
         containScroll="trimSnaps"
         ml={20}
         mr={20}
-        draggable={isMobile}
         classNames={styles}
         getEmblaApi={setEmbla}
         withControls={false}
