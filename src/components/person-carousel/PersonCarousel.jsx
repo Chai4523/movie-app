@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { ActionIcon, Group, Text, Title } from "@mantine/core";
 import "@mantine/carousel/styles.css";
 import { Carousel } from "@mantine/carousel";
-import { useMediaQuery } from "@mantine/hooks";
+import { useMediaQuery, useViewportSize } from "@mantine/hooks";
 import * as api from "../../utils/apiHelper";
 import styles from "./personCarousel.module.css";
 
@@ -37,6 +37,7 @@ export default function PersonCarousel({ data }) {
   const [embla, setEmbla] = useState(null);
   const useMobile = useMediaQuery("(max-width: 770px)");
   const [isMobile, setIsMobile] = useState(useMobile);
+  const { width } = useViewportSize();
 
   useEffect(() => {
     setIsMobile(useMobile);
@@ -45,6 +46,8 @@ export default function PersonCarousel({ data }) {
   const handleNext = () => embla?.scrollNext();
   const handlePrev = () => embla?.scrollPrev();
 
+  const slideSize = isMobile ? 140 : 190;
+  const showControls = data.length * slideSize > width;
   const slides = data.map((item) => (
     <Carousel.Slide key={item.id}>
       <PersonSlide {...item} />
@@ -57,7 +60,7 @@ export default function PersonCarousel({ data }) {
         <Title p={10} order={2} c={"white"} pos={"relative"}>
           Cast
         </Title>
-        {!isMobile && (
+        {!isMobile && showControls && (
           <Group mr={10}>
             <ActionIcon
               onClick={handlePrev}
@@ -79,19 +82,25 @@ export default function PersonCarousel({ data }) {
         )}
       </Group>
 
-      <Carousel
-        slideSize={isMobile ? 140 : 190}
-        slideGap={isMobile ? "xs" : "md"}
-        align="start"
-        containScroll="trimSnaps"
-        ml={20}
-        mr={20}
-        classNames={styles}
-        getEmblaApi={setEmbla}
-        withControls={false}
-      >
-        {slides}
-      </Carousel>
+      {data.length <= 0 ? (
+        <Text ta={"center"} p={20} m="10px 30px 0" fw={"bold"} fz={"lg"}>
+          No cast available.
+        </Text>
+      ) : (
+        <Carousel
+          slideSize={slideSize}
+          slideGap={isMobile ? "xs" : "md"}
+          align="start"
+          containScroll="trimSnaps"
+          ml={20}
+          mr={20}
+          classNames={styles}
+          getEmblaApi={setEmbla}
+          withControls={false}
+        >
+          {slides}
+        </Carousel>
+      )}
     </>
   );
 }

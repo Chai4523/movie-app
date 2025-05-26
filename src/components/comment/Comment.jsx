@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
 import styles from "./comment.module.css";
 import * as api from "../../utils/apiHelper";
 
-import { FaAngleDown } from "react-icons/fa6";
+import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 
 export default function Comment(props) {
   const {
@@ -127,7 +127,21 @@ export default function Comment(props) {
             </Box>
           )}
           {(!opened || page != total_pages) && total_results > 1 && (
-            <Box className={`${styles.row} ${styles.end}`}>
+            <Box className={`${styles.row} ${styles.sb}`} p={10}>
+              <Button
+                p={0}
+                fz={"md"}
+                fw={"bold"}
+                color="gray"
+                variant="transparent"
+                rightSection={<FaAngleUp />}
+                onClick={close}
+                className={`${styles.collapse} ${
+                  opened ? styles.visible : styles.hidden
+                }`}
+              >
+                Collapse
+              </Button>
               <Button
                 p={0}
                 fz={"md"}

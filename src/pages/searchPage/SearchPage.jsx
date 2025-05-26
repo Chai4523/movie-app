@@ -86,6 +86,8 @@ export default function SearchPage() {
               key={data.id}
               radius="md"
               size="xl"
+              color="white"
+              variant="outline"
               value={data.id.toString()}
               className={styles.chip}
             >
@@ -108,6 +110,7 @@ export default function SearchPage() {
       )}
       <Box className={`${styles.row} ${styles.pagination}`}>
         <Pagination
+          color="dimgray"
           total={totalPages}
           value={page}
           onChange={setPage}

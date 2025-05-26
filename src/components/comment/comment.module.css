@@ -53,6 +53,16 @@
   justify-content: center;
 }
 
-.end {
-  justify-content: end;
+.sb {
+  justify-content: space-between;
+}
+
+.collapse.hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.collapse.visible {
+  visibility: visible;
+  pointer-events: auto;
 }
