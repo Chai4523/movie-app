@@ -7,6 +7,7 @@ import * as api from "../../utils/apiHelper";
 import styles from "./personCarousel.module.css";
 
 import { TbChevronLeft, TbChevronRight } from "react-icons/tb";
+import ImgPlaceholder from "../placeholder/ImgPlaceholder";
 
 function PersonSlide({
   id,
@@ -16,15 +17,19 @@ function PersonSlide({
   profile_path,
   character,
 }) {
-  const profile = api.getImage(profile_path, "w185") || "/avatar.png";
+  const profile = api.getImage(profile_path, "w185") || null;
 
   return (
     <div>
-      <img
-        src={profile}
-        alt={`a picture of ${name}`}
-        className={styles["profile-img"]}
-      />
+      {profile ? (
+        <img
+          src={profile}
+          alt={`a picture of ${name}`}
+          className={styles["profile-img"]}
+        />
+      ) : (
+        <ImgPlaceholder type="person" variant="cast" />
+      )}
       <Title order={4} c={"white"} ta={"center"}>
         {name}
       </Title>

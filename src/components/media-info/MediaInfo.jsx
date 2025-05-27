@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import * as api from "../../utils/apiHelper";
 import styles from "./mediaInfo.module.css";
 import { useMediaQuery } from "@mantine/hooks";
+import ImgPlaceholder from "../placeholder/ImgPlaceholder";
 
 export default function MediaInfo(props) {
   const [toggleKeywords, setToggleKeywords] = useState(false);
@@ -86,11 +87,15 @@ export default function MediaInfo(props) {
       />
       <div className={styles["info-container"]}>
         <Box>
-          <img
-            src={poster}
-            alt={`a poster of ${media.title}`}
-            className={styles.poster}
-          />
+          {poster ? (
+            <img
+              src={poster}
+              alt={`a poster of ${media.title}`}
+              className={styles.poster}
+            />
+          ) : (
+            <ImgPlaceholder type="poster" variant="info" />
+          )}
         </Box>
         <ScrollArea className={styles.right} type="auto" offsetScrollbars>
           <Title c="white">{displayTitle}</Title>

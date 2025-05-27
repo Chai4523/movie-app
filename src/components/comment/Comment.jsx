@@ -13,6 +13,7 @@ import styles from "./comment.module.css";
 import * as api from "../../utils/apiHelper";
 
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
+import ImgPlaceholder from "../placeholder/ImgPlaceholder";
 
 export default function Comment(props) {
   const {
@@ -54,25 +55,29 @@ export default function Comment(props) {
         created_at,
         url,
       }) => {
-        const avatar = api.getImage(avatar_path, "w45") || "/avatar.png";
+        const avatar = api.getImage(avatar_path, "w45") || null;
 
         return (
           <Box key={id} className={styles.comment}>
             <Box className={styles["comment-header"]}>
-              <img
-                src={avatar}
-                alt="user profile image"
-                className={styles.avatar}
-              />
-              <Box className={styles.info}>
-                <Text fw={700} size="lg">
-                  {author}
-                </Text>
-                <Box className={styles.row}>
+              <Box className={styles.row}>
+                {avatar ? (
+                  <img
+                    src={avatar}
+                    alt="user profile image"
+                    className={styles.avatar}
+                  />
+                ) : (
+                  <ImgPlaceholder type="person" variant="review" />
+                )}
+                <Box className={styles.info}>
+                  <Text fw={700} size="lg">
+                    {author}
+                  </Text>
                   <Rating value={rating / 2} color="white" readOnly></Rating>
-                  <Text>{formatDate(created_at)}</Text>
                 </Box>
               </Box>
+              <Text>{formatDate(created_at)}</Text>
             </Box>
             <Text>{content}</Text>
           </Box>
@@ -126,7 +131,7 @@ export default function Comment(props) {
               <Loader type="dots" color="white" size="xl" />
             </Box>
           )}
-          {(!opened || page != total_pages) && total_results > 1 && (
+          {total_results > 1 && (
             <Box className={`${styles.row} ${styles.sb}`} p={10}>
               <Button
                 p={0}
@@ -142,17 +147,19 @@ export default function Comment(props) {
               >
                 Collapse
               </Button>
-              <Button
-                p={0}
-                fz={"md"}
-                fw={"bold"}
-                color="gray"
-                variant="transparent"
-                rightSection={<FaAngleDown />}
-                onClick={handleViewMore}
-              >
-                View More
-              </Button>
+              {(!opened || page != total_pages) && (
+                <Button
+                  p={0}
+                  fz={"md"}
+                  fw={"bold"}
+                  color="gray"
+                  variant="transparent"
+                  rightSection={<FaAngleDown />}
+                  onClick={handleViewMore}
+                >
+                  View More
+                </Button>
+              )}
             </Box>
           )}
         </>

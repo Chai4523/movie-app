@@ -5,6 +5,7 @@ import styles from "./mediaCarousel.module.css";
 import { Box, RingProgress, Text } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useEffect, useState } from "react";
+import ImgPlaceholder from "../placeholder/ImgPlaceholder";
 
 export default function MediaCard(props) {
   const {
@@ -57,7 +58,11 @@ export default function MediaCard(props) {
 
   return (
     <Link className={styles.card} to={`/${media_type}/${id}`}>
-      <img src={poster} alt="" className={styles["card-poster"]} />
+      {poster ? (
+        <img src={poster} alt="" className={styles["card-poster"]} />
+      ) : (
+        <ImgPlaceholder type="poster" variant="media" />
+      )}
       <Box className={styles.info}>
         <RingProgress
           ml={5}

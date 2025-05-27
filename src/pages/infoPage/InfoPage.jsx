@@ -19,7 +19,6 @@ export default function InfoPage() {
   } = useLoaderData();
 
   // TODO: empty recommendation handling
-  // TODO: image not available handling http://localhost:5173/movie/119994(info), http://localhost:5173/movie/1001414(recommendations)
   return (
     <Box>
       <MediaInfo data={{ media, keyword, rating }} />

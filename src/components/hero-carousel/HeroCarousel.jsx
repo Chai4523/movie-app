@@ -22,6 +22,7 @@ import { CiBookmark } from "react-icons/ci";
 import { TbChevronLeft, TbChevronRight } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mantine/hooks";
+import ImgPlaceholder from "../placeholder/ImgPlaceholder";
 
 function Hero({
   id,
@@ -33,10 +34,10 @@ function Hero({
   media_type,
   genre_ids,
   vote_average,
-  isMobile
+  isMobile,
 }) {
   const backdrop = api.getImage(backdrop_path, "w1280");
-  const poster = api.getImage(poster_path, "w500");
+  const poster = api.getImage(poster_path, "w500") || null;
   const iconInfo = <FaCircleInfo size={18} />;
   const displayTitle = title || name;
   const { getGenreByIds, loading } = useGenres();
@@ -75,27 +76,37 @@ function Hero({
             variant="outline"
             aria-label="action icon"
             size={isMobile ? 48 : 60}
-            radius={isMobile? 48: 60}
+            radius={isMobile ? 48 : 60}
             color="dimgrey"
             bd="2px solid dimgrey"
           >
             <CiBookmark size={26} color="white" />
           </ActionIcon>
           <RingProgress
-            size={isMobile? 55 : 70}
-            thickness={isMobile? 3 : 4.8}
+            size={isMobile ? 55 : 70}
+            thickness={isMobile ? 3 : 4.8}
             roundCaps
             sections={[{ value: vote_average * 10, color: "white" }]}
             label={
-              <Text c="white" fw={500} ta="center" size={isMobile ? "md" : "lg"}>
+              <Text
+                c="white"
+                fw={500}
+                ta="center"
+                size={isMobile ? "md" : "lg"}
+              >
                 {Number.parseFloat(vote_average).toFixed(1)}
               </Text>
             }
           />
         </div>
       </Box>
+
       <Box className={styles.poster}>
-        <img src={poster} alt={`A poster of ${title}`} classNames={styles} />
+        {poster ? (
+          <img src={poster} alt={`A poster of ${title}`} classNames={styles} />
+        ) : (
+          <ImgPlaceholder type="poster" variant="hero" />
+        )}
       </Box>
     </Box>
   );
