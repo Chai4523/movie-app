@@ -6,6 +6,7 @@ import { Box, RingProgress, Text } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import ImgPlaceholder from "../placeholder/ImgPlaceholder";
+import { formatDate, formatMediaType } from "../../utils/formatUtils";
 
 export default function MediaCard(props) {
   const {
@@ -28,27 +29,10 @@ export default function MediaCard(props) {
     return "red";
   };
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-
-    return new Intl.DateTimeFormat("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    }).format(date);
-  };
-
-  const formatMediaType = (media_type) => {
-    if (media_type == "tv") return "TV";
-    return (
-      String(media_type).charAt(0).toUpperCase() + String(media_type).slice(1)
-    );
-  };
-
   const displayTitle = title || name;
   const poster = api.getImage(poster_path, "w342");
   const releaseDate = release_date || first_air_date;
-  const displayDate = releaseDate ? formatDate(releaseDate) : "Date N/A";
+  const displayDate = releaseDate ? formatDate(releaseDate, "short") : "Date N/A";
   const useMobile = useMediaQuery("(max-width: 770px)");
   const [isMobile, setIsMobile] = useState(useMobile);
 

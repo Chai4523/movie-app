@@ -14,6 +14,7 @@ import * as api from "../../utils/apiHelper";
 
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 import ImgPlaceholder from "../placeholder/ImgPlaceholder";
+import { formatDate } from "../../utils/formatUtils";
 
 export default function Comment(props) {
   const {
@@ -34,16 +35,6 @@ export default function Comment(props) {
     setLoading(false);
     close();
   }, [id]);
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-
-    return new Intl.DateTimeFormat("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    }).format(date);
-  };
 
   const renderComments = (data) =>
     data.map(
@@ -132,7 +123,7 @@ export default function Comment(props) {
             </Box>
           )}
           {total_results > 1 && (
-            <Box className={`${styles.row} ${styles.sb}`} p={10}>
+            <Box className={`${styles.row} ${styles.sb}`} pl={10} pr={10}>
               <Button
                 p={0}
                 fz={"md"}

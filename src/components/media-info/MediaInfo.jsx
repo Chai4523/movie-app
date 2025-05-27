@@ -7,11 +7,11 @@ import {
   Title,
   Tooltip,
 } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as api from "../../utils/apiHelper";
 import styles from "./mediaInfo.module.css";
-import { useMediaQuery } from "@mantine/hooks";
 import ImgPlaceholder from "../placeholder/ImgPlaceholder";
+import { formatCurrency, formatDate, formatRuntime } from "../../utils/formatUtils";
 
 export default function MediaInfo(props) {
   const [toggleKeywords, setToggleKeywords] = useState(false);
@@ -24,12 +24,6 @@ export default function MediaInfo(props) {
   const keywordsTrimmed = keyword ? keyword.slice(0, 3) : null;
   const displayTitle = media ? media.title || media.name : null;
   const displayDate = media ? media.release_date || media.first_air_date : null;
-  const useMobile = useMediaQuery("(max-width: 830px)");
-  const [isMobile, setIsMobile] = useState(useMobile);
-
-  useEffect(() => {
-    setIsMobile(useMobile);
-  }, [useMobile]);
 
   const onToggleKeywords = () => {
     if (!toggleKeywords) {
@@ -48,35 +42,6 @@ export default function MediaInfo(props) {
           </span>
         ))
       : null;
-
-  const formatRuntime = (runtime) => {
-    const hours = Math.floor(runtime / 60);
-    const mins = runtime % 60;
-
-    let output = "";
-    if (hours > 0) output += `${hours} hour${hours > 1 ? "s" : ""}`;
-    if (mins > 0) output += ` ${mins} minutes`;
-
-    return output || "N/A";
-  };
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-
-    return new Intl.DateTimeFormat("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    }).format(date);
-  };
-
-  const formatCurrency = (value) =>
-    value.toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    });
 
   return (
     <Box>

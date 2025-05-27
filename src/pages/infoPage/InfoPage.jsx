@@ -18,7 +18,6 @@ export default function InfoPage() {
     rating,
   } = useLoaderData();
 
-  // TODO: empty recommendation handling
   return (
     <Box>
       <MediaInfo data={{ media, keyword, rating }} />

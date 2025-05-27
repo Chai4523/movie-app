@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ActionIcon, Group, Text, Title } from "@mantine/core";
+import { ActionIcon, Box, Group, Text, Title } from "@mantine/core";
 import "@mantine/carousel/styles.css";
 import { Carousel } from "@mantine/carousel";
 import { useMediaQuery, useViewportSize } from "@mantine/hooks";
@@ -52,7 +52,7 @@ export default function PersonCarousel({ data }) {
   const handlePrev = () => embla?.scrollPrev();
 
   const slideSize = isMobile ? 140 : 190;
-  const showControls = data.length * slideSize > width;
+  const showControls = data.length * (slideSize + 10) > width + 0.4 * slideSize;
   const slides = data.map((item) => (
     <Carousel.Slide key={item.id}>
       <PersonSlide {...item} />
@@ -60,9 +60,9 @@ export default function PersonCarousel({ data }) {
   ));
 
   return (
-    <>
+    <Box p={10} m={20}>
       <Group className={styles["section-heading"]}>
-        <Title p={10} order={2} c={"white"} pos={"relative"}>
+        <Title order={2} c={"white"} pos={"relative"}>
           Cast
         </Title>
         {!isMobile && showControls && (
@@ -88,8 +88,8 @@ export default function PersonCarousel({ data }) {
       </Group>
 
       {data.length <= 0 ? (
-        <Text ta={"center"} p={20} m="10px 30px 0" fw={"bold"} fz={"lg"}>
-          No cast available.
+        <Text fw={700} fz={"lg"} ta={"center"} p={10} mt={20} mb={20}>
+          No cast found.
         </Text>
       ) : (
         <Carousel
@@ -97,8 +97,6 @@ export default function PersonCarousel({ data }) {
           slideGap={isMobile ? "xs" : "md"}
           align="start"
           containScroll="trimSnaps"
-          ml={20}
-          mr={20}
           classNames={styles}
           getEmblaApi={setEmbla}
           withControls={false}
@@ -106,6 +104,6 @@ export default function PersonCarousel({ data }) {
           {slides}
         </Carousel>
       )}
-    </>
+    </Box>
   );
 }

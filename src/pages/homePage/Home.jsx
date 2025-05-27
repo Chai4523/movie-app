@@ -1,7 +1,6 @@
-import React from "react";
 import HeroCarousel from "../../components/hero-carousel/HeroCarousel.jsx";
 import MediaCarousel from "../../components/media-carousel/MediaCarousel.jsx";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 export default function Home() {
   const { trendingAll, trendingMovie, trendingTv } = useLoaderData();
@@ -10,9 +9,7 @@ export default function Home() {
     <>
       {trendingAll && <HeroCarousel data={trendingAll.results} />}
       {trendingMovie && (
-        <div style={{ marginTop: "20px" }}>
-          <MediaCarousel data={trendingMovie.results} title="Trending Movie" />
-        </div>
+        <MediaCarousel data={trendingMovie.results} title="Trending Movie" />
       )}
       {trendingTv && (
         <MediaCarousel data={trendingTv.results} title="Trending TV Shows" />

@@ -17,8 +17,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 2rem;
+  justify-content: space-evenly;
   padding: 20px 0 20px 32px;
   height: 100%;
   width: 100%;
@@ -37,10 +36,6 @@
   font-weight: 700;
   max-width: 600px;
   white-space: normal;
-  margin-bottom: 20px;
-}
-
-.genre {
   margin-bottom: 20px;
 }
 
@@ -102,7 +97,7 @@
 
   .content {
     padding: 20px 20px 15px;
-    gap: 0;
+    justify-content: center;
   }
 
   .poster {
@@ -120,7 +115,6 @@
 
   .genre {
     text-align: center;
-    margin-bottom: 0;
   }
 
   .action-row {

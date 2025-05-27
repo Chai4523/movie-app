@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ActionIcon, Box, Group, HoverCard, Title } from "@mantine/core";
+import { ActionIcon, Box, Group, HoverCard, Text, Title } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
 import { Carousel } from "@mantine/carousel";
@@ -60,12 +60,12 @@ export default function MediaCarousel({
   }, [useMobile]);
 
   return (
-    <>
+    <Box p={10} m={20}>
       <Group className={styles["section-heading"]}>
-        <Title order={2} c={"white"} pos={"relative"} p={10}>
+        <Title order={2} c={"white"} pos={"relative"}>
           {title}
         </Title>
-        {!isMobile && (
+        {!isMobile && data.length && (
           <Group mr={10}>
             <ActionIcon
               onClick={handlePrev}
@@ -86,20 +86,24 @@ export default function MediaCarousel({
           </Group>
         )}
       </Group>
-      <Carousel
-        slideSize={isMobile ? 150 : 210}
-        slideGap={isMobile ? "xs" : "sm"}
-        align="start"
-        containScroll="trimSnaps"
-        p={10}
-        ml={20}
-        mr={20}
-        classNames={styles}
-        getEmblaApi={setEmbla}
-        withControls={false}
-      >
-        {slides}
-      </Carousel>
-    </>
+
+      {data.length ? (
+        <Carousel
+          slideSize={isMobile ? 150 : 210}
+          slideGap={isMobile ? "xs" : "sm"}
+          align="start"
+          containScroll="trimSnaps"
+          classNames={styles}
+          getEmblaApi={setEmbla}
+          withControls={false}
+        >
+          {slides}
+        </Carousel>
+      ) : (
+        <Text fw={700} size="lg" ta={"center"} p={10} mt={20} mb={20}>
+          No results found.
+        </Text>
+      )}
+    </Box>
   );
 }
