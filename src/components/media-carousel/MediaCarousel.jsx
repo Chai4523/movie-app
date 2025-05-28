@@ -96,6 +96,7 @@ export default function MediaCarousel({
           classNames={styles}
           getEmblaApi={setEmbla}
           withControls={false}
+          skipSnaps
         >
           {slides}
         </Carousel>

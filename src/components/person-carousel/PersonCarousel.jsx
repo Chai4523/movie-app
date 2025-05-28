@@ -100,6 +100,7 @@ export default function PersonCarousel({ data }) {
           classNames={styles}
           getEmblaApi={setEmbla}
           withControls={false}
+          skipSnaps
         >
           {slides}
         </Carousel>

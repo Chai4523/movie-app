@@ -137,6 +137,8 @@ export default function HeroCarousel({ data }) {
           loop={true}
           getEmblaApi={setEmbla}
           plugins={[autoPlay.current]}
+          onMouseEnter={autoPlay.current.stop}
+          onMouseLeave={() => autoPlay.current.play()}
           withIndicators={!isMobile}
           classNames={styles}
           withControls={!isMobile}
