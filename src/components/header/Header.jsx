@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Burger, Group, Input, Menu, Text } from "@mantine/core";
 import "@mantine/core/styles.css";
-import styles from "./headerNav.module.css";
+import styles from "./header.module.css";
 import { MdSearch } from "react-icons/md";
 import { IoTvOutline } from "react-icons/io5";
 import { SiMyanimelist } from "react-icons/si";
@@ -13,7 +13,7 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
 
-export default function HeaderNav() {
+export default function Header() {
   const [showHeader, setShowHeader] = useState(true);
   const lastScrollY = useRef(0);
   const [opened, { toggle }] = useDisclosure();

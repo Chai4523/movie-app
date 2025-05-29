@@ -1,0 +1,49 @@
+.content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  column-gap: 40px;
+  row-gap: 20px;
+}
+
+.link {
+  color: white;
+  font-weight: bold;
+}
+
+.logo {
+  width: 60px;
+  height: 40px;
+}
+
+.link:hover {
+  color: #ffcf40;
+}
+
+.row-gap-20 {
+  row-gap: 20px;
+}
+
+.author {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.attribution {
+  justify-content: center;
+}
+
+@media (width < 770px) {
+  .content {
+    justify-content: space-between;
+  }
+
+  .author {
+    text-align: start;
+  }
+
+  .attribution {
+    justify-content: flex-start;
+  }
+}
