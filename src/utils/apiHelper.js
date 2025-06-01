@@ -2,16 +2,19 @@ const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 const TMDB_BASE_IMG_URL = "https://image.tmdb.org/t/p";
-const JIKAN_BASE_URL = "";
+const JIKAN_BASE_URL = "https://api.jikan.moe";
 
 async function fetchData(url) {
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${TMDB_API_KEY}`,
-    },
-  };
+  let options = {};
+  if (url.includes("themoviedb")) {
+    options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${TMDB_API_KEY}`,
+      },
+    };
+  }
 
   try {
     const response = await fetch(url, options);
@@ -76,7 +79,7 @@ export async function fetchReviewsById(id, mediaType, page = 1) {
 }
 
 export async function getMediaRating(id, mediaType) {
-  const path = mediaType === "movie" ? "release_dates" : "content_ratings"
+  const path = mediaType === "movie" ? "release_dates" : "content_ratings";
   const url = `${TMDB_BASE_URL}/${mediaType}/${id}/${path}`;
   return fetchData(url);
 }
@@ -110,4 +113,9 @@ export function extractRating(data, mediaType, countryCode = "US") {
 
 export function getImage(imgPath, size) {
   return imgPath ? `${TMDB_BASE_IMG_URL}/${size}/${imgPath}` : null;
+}
+
+export async function fetchTopJikan(type, limit = 20, page = 1) {
+  const url = `${JIKAN_BASE_URL}/v4/top/${type}?limit=${limit}&page=${page}`;
+  return fetchData(url);
 }

@@ -16,7 +16,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: (
+          <GenreProvider>
+            <Home />
+          </GenreProvider>
+        ),
         loader: homeLoader,
       },
       {

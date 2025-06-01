@@ -58,7 +58,7 @@ export default function Header() {
           </Link>
           <Link className={styles["nav-item"]} to={`/search/tv`}>
             <FiTv />
-            <Text pl={6}>Shows</Text>
+            <Text pl={6}>TV Shows</Text>
           </Link>
           <Link className={styles["nav-item"]} to={`/`}>
             <SiMyanimelist />
@@ -93,7 +93,7 @@ export default function Header() {
             </Link>
             <Link to={`/search/tv`}>
               <Menu.Item leftSection={<FiTv />} className={styles["menu-item"]}>
-                Shows
+                TV Shows
               </Menu.Item>
             </Link>
             <Link to={`/`}>

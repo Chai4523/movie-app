@@ -10,42 +10,35 @@ import {
 import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
 import { Carousel } from "@mantine/carousel";
+import { useMediaQuery } from "@mantine/hooks";
 import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
 import { useState, useEffect } from "react";
 import styles from "./heroCarousel.module.css";
-import * as api from "../../utils/apiHelper";
-import { GenreProvider, useGenres } from "../../contexts/GenreContext";
 
 import { FaCircleInfo } from "react-icons/fa6";
 import { CiBookmark } from "react-icons/ci";
 import { TbChevronLeft, TbChevronRight } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
-import { useMediaQuery } from "@mantine/hooks";
 import ImgPlaceholder from "../placeholder/ImgPlaceholder";
 
 function Hero({
   id,
+  title,
+  overview,
+  type,
+  genres,
+  score,
   backdrop_path,
   poster_path,
-  title,
-  name,
-  overview,
-  media_type,
-  genre_ids,
-  vote_average,
   isMobile,
 }) {
-  const backdrop = api.getImage(backdrop_path, "w1280");
-  const poster = api.getImage(poster_path, "w500") || null;
   const iconInfo = <FaCircleInfo size={18} />;
-  const displayTitle = title || name;
-  const { getGenreByIds, loading } = useGenres();
   const navigate = useNavigate();
 
   return (
     <Box
-      style={{ backgroundImage: `url(${backdrop})` }}
+      style={{ backgroundImage: `url(${backdrop_path})` }}
       className={styles.hero}
     >
       <Overlay
@@ -54,21 +47,19 @@ function Hero({
       />
       <Box className={styles.content}>
         <Title order={1} className={styles.title}>
-          {displayTitle}
+          {title}
         </Title>
         <Text className={styles.overview} lineClamp={3}>
           {overview}
         </Text>
-        <Text className={styles.genre}>
-          {!loading && getGenreByIds(genre_ids)}
-        </Text>
+        <Text className={styles.genre}>{genres}</Text>
         <div className={styles["action-row"]}>
           <Button
             variant="white"
             color="black"
             leftSection={iconInfo}
             size={isMobile ? "sm" : "lg"}
-            onClick={() => navigate(`/${media_type}/${id}`)}
+            onClick={() => navigate(`/${type}/${id}`)}
           >
             More Info
           </Button>
@@ -86,7 +77,7 @@ function Hero({
             size={isMobile ? 55 : 70}
             thickness={isMobile ? 3 : 4.8}
             roundCaps
-            sections={[{ value: vote_average * 10, color: "white" }]}
+            sections={[{ value: score * 10, color: "white" }]}
             label={
               <Text
                 c="white"
@@ -94,7 +85,7 @@ function Hero({
                 ta="center"
                 size={isMobile ? "md" : "lg"}
               >
-                {Number.parseFloat(vote_average).toFixed(1)}
+                {Number.parseFloat(score).toFixed(1)}
               </Text>
             }
           />
@@ -102,8 +93,12 @@ function Hero({
       </Box>
 
       <Box className={styles.poster}>
-        {poster ? (
-          <img src={poster} alt={`A poster of ${title}`} classNames={styles} />
+        {poster_path ? (
+          <img
+            src={poster_path}
+            alt={`A poster of ${title}`}
+            classNames={styles}
+          />
         ) : (
           <ImgPlaceholder type="poster" variant="hero" />
         )}
@@ -129,25 +124,21 @@ export default function HeroCarousel({ data }) {
   ));
 
   return (
-    <>
-      <GenreProvider>
-        <Carousel
-          color="white"
-          align="start"
-          loop={true}
-          getEmblaApi={setEmbla}
-          plugins={[autoPlay.current]}
-          onMouseEnter={autoPlay.current.stop}
-          onMouseLeave={() => autoPlay.current.play()}
-          withIndicators={!isMobile}
-          classNames={styles}
-          withControls={!isMobile}
-          nextControlIcon={<TbChevronRight size={50} />}
-          previousControlIcon={<TbChevronLeft size={50} />}
-        >
-          {slides}
-        </Carousel>
-      </GenreProvider>
-    </>
+    <Carousel
+      color="white"
+      align="start"
+      loop={true}
+      getEmblaApi={setEmbla}
+      plugins={[autoPlay.current]}
+      onMouseEnter={autoPlay.current.stop}
+      onMouseLeave={() => autoPlay.current.play()}
+      withIndicators={!isMobile}
+      classNames={styles}
+      withControls={!isMobile}
+      nextControlIcon={<TbChevronRight size={50} />}
+      previousControlIcon={<TbChevronLeft size={50} />}
+    >
+      {slides}
+    </Carousel>
   );
 }
