@@ -2,7 +2,12 @@ import HeroCarousel from "../../components/hero-carousel/HeroCarousel.jsx";
 import MediaCarousel from "../../components/media-carousel/MediaCarousel.jsx";
 import { useLoaderData } from "react-router-dom";
 import { useGenres } from "../../contexts/GenreContext.jsx";
-import { mapFromAniList, mapFromTMDB } from "../../utils/dataMapper.js";
+import {
+  mapHeroFromAniList,
+  mapHeroFromTMDB,
+  mapMediaCarouselFromAniList,
+  mapMediaCarouselFromTMDB,
+} from "../../utils/dataMapper.js";
 
 export default function Home() {
   const {
@@ -15,23 +20,40 @@ export default function Home() {
 
   const { getGenreByIds } = useGenres();
   const tmdbHeroData = trendingAll.results.map((item) =>
-    mapFromTMDB(item, getGenreByIds)
+    mapHeroFromTMDB(item, getGenreByIds)
   );
-  console.log("home", trendingAnime.Page.media);
-  const aniHeroData = trendingAnime.Page.media.map((item) => 
-    mapFromAniList(item)
+  const movieCarouselData = trendingMovie.results.map((item) =>
+    mapMediaCarouselFromTMDB(item, getGenreByIds)
+  );
+  const tvCarouselData = trendingTv.results.map((item) =>
+    mapMediaCarouselFromTMDB(item, getGenreByIds)
+  );
+  const animeCarouselData = trendingAnime.Page.media.map((item) =>
+    mapMediaCarouselFromAniList(item)
+  );
+  const mangaCarouselData = trendingManga.Page.media.map((item) =>
+    mapMediaCarouselFromAniList(item)
+  );
+  const aniHeroData = animeCarouselData.filter(
+    (item) => item.backdrop_path
   );
 
   return (
     <>
       {trendingAll && <HeroCarousel data={tmdbHeroData} />}
       {trendingMovie && (
-        <MediaCarousel data={trendingMovie.results} title="Trending Movie" />
+        <MediaCarousel data={movieCarouselData} title="Trending Movie" />
       )}
       {trendingTv && (
-        <MediaCarousel data={trendingTv.results} title="Trending TV Shows" />
+        <MediaCarousel data={tvCarouselData} title="Trending TV Shows" />
       )}
       {trendingAnime && <HeroCarousel data={aniHeroData} />}
+      {trendingAnime && (
+        <MediaCarousel data={animeCarouselData} title="Trending Anime" />
+      )}
+      {trendingManga && (
+        <MediaCarousel data={mangaCarouselData} title="Trending Manga" />
+      )}
     </>
   );
 }

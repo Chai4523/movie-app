@@ -5,11 +5,18 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   column-gap: 4rem;
   padding: 30px;
+}
+
+.hero.tmdb {
+  background-size: cover;
+}
+
+.hero.ani {
+  background-size: contain;
 }
 
 .content {

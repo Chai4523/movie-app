@@ -31,6 +31,7 @@ function Hero({
   score,
   backdrop_path,
   poster_path,
+  source,
   isMobile,
 }) {
   const iconInfo = <FaCircleInfo size={18} />;
@@ -39,7 +40,7 @@ function Hero({
   return (
     <Box
       style={{ backgroundImage: `url(${backdrop_path})` }}
-      className={styles.hero}
+      className={`${styles.hero} ${source === "TMDB" ? styles.tmdb : styles.ani}`}
     >
       <Overlay
         zIndex={0}

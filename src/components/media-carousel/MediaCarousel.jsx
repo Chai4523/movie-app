@@ -12,7 +12,9 @@ import { useMediaQuery } from "@mantine/hooks";
 import { TbChevronLeft, TbChevronRight } from "react-icons/tb";
 
 function Card(props) {
-  const { disabled } = props;
+  // const { disabled } = props;
+  // TODO: refactor hoverinfo to fit data mapper
+  let disabled = true
 
   return (
     <HoverCard

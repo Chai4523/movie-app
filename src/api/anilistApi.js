@@ -1,7 +1,7 @@
 const ANILIST_API_URL = "https://graphql.anilist.co";
 
 const TRENDING_MEDIA_QUERY = `
-query($perPage: Int, $page: Int) {
+query($perPage: Int, $page: Int, $type: MediaType) {
     Page(page: $page, perPage: $perPage) {
         pageInfo {
             total
@@ -10,7 +10,7 @@ query($perPage: Int, $page: Int) {
             lastPage
             hasNextPage
         }
-        media (sort :TRENDING_DESC, type : ANIME){
+        media (sort :TRENDING_DESC, type : $type){
             id
             title {
                 romaji
@@ -30,6 +30,11 @@ query($perPage: Int, $page: Int) {
             format
             averageScore
             popularity
+            startDate {
+            year
+            month
+            day
+          }
         }
     }
 }

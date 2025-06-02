@@ -1,10 +1,10 @@
-export const formatDate = (dateString, month = "long") => {
-  if (!dateString) return null;
-  const date = new Date(dateString);
-
+export const formatDate = (date, month = "long") => {
+  if (!date) return null;
+  // const date = new Date(dateString);
+  // TODO: refactor this function in other components 
   return new Intl.DateTimeFormat("en-US", {
-    month: month,
     day: "numeric",
+    month: month,
     year: "numeric",
   }).format(date);
 };
@@ -38,3 +38,9 @@ export const formatMediaType = (media_type) => {
     String(media_type).charAt(0).toUpperCase() + String(media_type).slice(1)
   );
 };
+
+export function parseHtmlText(html) {
+  const temp = document.createElement('div');
+  temp.innerHTML = html;
+  return temp.textContent || "";
+}
