@@ -33,7 +33,7 @@ export const mapMediaCarouselFromTMDB = (item, genreMap = () => {}) => ({
   genres: item.genre_ids ? genreMap(item.genre_ids) : [],
   score: item.vote_average,
   poster_path: api.getImage(item.poster_path, "w342"),
-  backdrop_path: api.getImage(item.backdrop_path, "w1280"),
+  backdrop_path: api.getImage(item.backdrop_path, "w780"),
   release_date:
     formatDate(new Date(item.first_air_date || item.release_date), "short") ||
     "Date N/A",

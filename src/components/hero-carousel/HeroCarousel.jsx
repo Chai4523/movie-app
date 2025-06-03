@@ -37,10 +37,16 @@ function Hero({
   const iconInfo = <FaCircleInfo size={18} />;
   const navigate = useNavigate();
 
+  if (isMobile && source === "ANI") {
+    backdrop_path = poster_path;
+  }
+
   return (
     <Box
       style={{ backgroundImage: `url(${backdrop_path})` }}
-      className={`${styles.hero} ${source === "TMDB" ? styles.tmdb : styles.ani}`}
+      className={`${styles.hero} ${
+        source === "TMDB" ? styles.tmdb : styles.ani
+      }`}
     >
       <Overlay
         zIndex={0}

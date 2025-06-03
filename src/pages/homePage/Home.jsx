@@ -18,6 +18,7 @@ export default function Home() {
     trendingManga,
   } = useLoaderData();
 
+  // TODO: fix load time 
   const { getGenreByIds } = useGenres();
   const tmdbHeroData = trendingAll.results.map((item) =>
     mapHeroFromTMDB(item, getGenreByIds)

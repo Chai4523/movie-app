@@ -6,20 +6,17 @@ import { Carousel } from "@mantine/carousel";
 import styles from "./mediaCarousel.module.css";
 import HoverInfo from "./HoverInfo";
 import MediaCard from "./MediaCard";
-import { GenreProvider } from "../../contexts/GenreContext";
 import { useMediaQuery } from "@mantine/hooks";
 
 import { TbChevronLeft, TbChevronRight } from "react-icons/tb";
 
 function Card(props) {
-  // const { disabled } = props;
-  // TODO: refactor hoverinfo to fit data mapper
-  let disabled = true
+  const { disabled } = props;
 
   return (
     <HoverCard
       openDelay={150}
-      closeDelay={200}
+      closeDelay={0}
       position="right"
       disabled={disabled}
     >
@@ -29,11 +26,7 @@ function Card(props) {
         </Box>
       </HoverCard.Target>
       <HoverCard.Dropdown p={0} className={styles["br-10"]}>
-        {disabled || (
-          <GenreProvider>
-            <HoverInfo {...props} />
-          </GenreProvider>
-        )}
+        {disabled || <HoverInfo {...props} />}
       </HoverCard.Dropdown>
     </HoverCard>
   );

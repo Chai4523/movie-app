@@ -102,6 +102,10 @@
     height: calc(100vh - 48px);
   }
 
+  .hero.ani {
+    background-size: cover;
+  }
+
   .content {
     padding: 20px 20px 15px;
     justify-content: center;
