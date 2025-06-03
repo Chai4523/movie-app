@@ -89,8 +89,8 @@ export default function Footer() {
         >
           <img src="/tmdb.svg" alt="" className={styles.logo} />
         </a>
-        <a href="https://jikan.moe/" target="_blank" rel="noopener noreferrer">
-          <img src="/jikan.svg" alt="" className={styles.logo} />
+        <a href="https://anilist.co/" target="_blank" rel="noopener noreferrer">
+          <img src="/anilist.svg" alt="" className={styles.logo} />
         </a>
       </Group>
     </Box>

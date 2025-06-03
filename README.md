@@ -33,13 +33,16 @@ pnpm run dev
 
 These features are in development to enhance the discovery experience:
 
-- 📺 Anime Search & Discovery powered by Jikan API
-- ❤️ Save favorites
+- ❤️ Bookmark Feature
 
 Stay tuned!
 
 ## 🤝 Acknowledgements
 
 <img height="50px" src="./public/tmdb.svg">
+<img height="50px" src="./public/anilist.svg">
 
-This project uses the TMDB API but is not endorsed or certified by TMDB.
+This project uses the following APIs:
+
+- TMDB API: Not endorsed or certified by TMDB.
+- AniList API: Not endorsed or certified by AniList.
